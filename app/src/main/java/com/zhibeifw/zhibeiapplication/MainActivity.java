@@ -10,7 +10,7 @@ public class MainActivity extends MaterialNavigationDrawer {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        this.addSection(newSection("Section 1", new Fragment()));
+        this.addSection(newSection(getString(R.string.puja), new Fragment()));
 
     }
 
