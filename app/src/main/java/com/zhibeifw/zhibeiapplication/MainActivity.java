@@ -1,20 +1,20 @@
 package com.zhibeifw.zhibeiapplication;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.support.v4.app.Fragment;
+
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends MaterialNavigationDrawer {
 
     @Override
+    public void init(Bundle savedInstanceState) {
+        this.addSection(newSection("Section 1", new Fragment()));
+
+    }
+
+    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * A placeholder fragment containing a simple view.
-     */
+    <]
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -62,5 +62,5 @@ public class MainActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
-    }
+    } */
 }
