@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZhibeiApplication.iml" filepath="$PROJECT_DIR$/ZhibeiApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frameworks/frameworks.iml" filepath="$PROJECT_DIR$/frameworks/frameworks.iml" />
     </modules>
   </component>
 </project>
