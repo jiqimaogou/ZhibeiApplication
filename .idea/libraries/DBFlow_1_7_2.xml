@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="DBFlow-1.7.2">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/frameworks/build/intermediates/exploded-aar/com.raizlabs.android/DBFlow/1.7.2/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/frameworks/build/intermediates/exploded-aar/com.raizlabs.android/DBFlow/1.7.2/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/frameworks/build/intermediates/exploded-aar/com.raizlabs.android/DBFlow/1.7.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
