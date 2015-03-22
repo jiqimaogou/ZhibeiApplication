@@ -1,7 +1,8 @@
 package com.zhibeifw.zhibeiapplication;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import com.zhibeifw.frameworks.app.test.ActionBarPullToRefreshListFragmentTest;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
@@ -10,7 +11,7 @@ public class MainActivity extends MaterialNavigationDrawer {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        this.addSection(newSection(getString(R.string.puja),R.drawable.ic_puja,new Fragment()));
+        this.addSection(newSection(getString(R.string.puja),R.drawable.ic_puja,new ActionBarPullToRefreshListFragmentTest()));
 
     }
 
