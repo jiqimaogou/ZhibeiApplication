@@ -28,7 +28,7 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
      * @param layoutResId The layout resource id of each item.
      */
     protected FlowQuickAdapter(Context context, int layoutResId, FlowCursorList<ModelClass> mCursorList) {
-        super(context, layoutResId, mCursorList.getAll());
+        super(context, layoutResId);
         setCursorList(mCursorList);
         FlowContentObserver.ModelChangeListener modelChangeListener = new FlowContentObserver.ModelChangeListener() {
             @Override
@@ -64,6 +64,7 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
         this.mCursorList = mCursorList;
         mFlowContentObserver.unregisterForContentChanges(context);
         mFlowContentObserver.registerForContentChanges(context, mCursorList.getTable());
+        refresh();
     }
 
     public List<ModelClass> getAll() {
