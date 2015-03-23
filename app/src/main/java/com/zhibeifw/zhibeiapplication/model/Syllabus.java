@@ -25,4 +25,28 @@ public class Syllabus extends BaseModel {
 
     @Column
     long updated_at;
+
+    public String getSyllabus() {
+        return syllabus;
+    }
+
+    public void setSyllabus(String syllabus) {
+        this.syllabus = syllabus;
+    }
+
+    public String getPush_content() {
+        return push_content;
+    }
+
+    public void setPush_content(String push_content) {
+        this.push_content = push_content;
+    }
+
+    public long getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(long updated_at) {
+        this.updated_at = updated_at;
+    }
 }

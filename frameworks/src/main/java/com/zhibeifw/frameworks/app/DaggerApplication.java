@@ -18,7 +18,7 @@ public class DaggerApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
 
-        graph = ObjectGraph.create(getModules().toArray());
+        // graph = ObjectGraph.create(getModules().toArray());
     }
 
     protected List<Object> getModules() {

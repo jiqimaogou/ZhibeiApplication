@@ -11,7 +11,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 /**
  * Created by Administrator on 2015/3/22 0022.
  */
-public class ActionBarPullToRefreshListFragment extends FloatingActionButtonListFragment
+public class ActionBarPullToRefreshListFragment extends ListFragment
     implements OnRefreshListener {
 
     private PullToRefreshLayout mPullToRefreshLayout;

@@ -25,9 +25,9 @@ public class ItemViewOnClickListener implements View.OnClickListener {
         } else if (objs.length == 1) {
             onClick(v, itemInfoHolder.position, objs[0]);
         } else if (objs.length == 2) {
-            onClick(v, itemInfoHolder.position, objs[0]);
-        } else {
             onClick(v, itemInfoHolder.position, objs[0], objs[1]);
+        } else {
+            onClick(v, itemInfoHolder.position, objs);
         }
     }
 

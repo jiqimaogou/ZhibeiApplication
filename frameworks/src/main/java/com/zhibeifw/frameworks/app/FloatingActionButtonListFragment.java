@@ -10,7 +10,7 @@ import com.zhibeifw.frameworks.R;
 /**
  * Created by Administrator on 2015/3/22 0022.
  */
-public class FloatingActionButtonListFragment extends ListFragment {
+public class FloatingActionButtonListFragment extends ActionBarPullToRefreshListFragment {
 
     // @Override
     public View onCreateListView(LayoutInflater inflater, ViewGroup container,

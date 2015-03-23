@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/3/22 0022.
  */
-public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickAdapter {
+public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickAdapter<ModelClass> {
 
     /**
      * Holds the table cursor

@@ -12,6 +12,7 @@ public class MainActivity extends MaterialNavigationDrawer {
     @Override
     public void init(Bundle savedInstanceState) {
         this.addSection(newSection(getString(R.string.puja),R.drawable.ic_puja,new ActionBarPullToRefreshListFragmentTest()));
+        this.addSection(newSection(getString(R.string.syllabus),R.drawable.ic_puja,new SyllabusListFragment()));
 
     }
 
