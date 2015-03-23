@@ -57,9 +57,19 @@ public class ItemViewOnClickListener implements View.OnClickListener {
             this.objs = objs;
         }
 
+        public ItemInfoHolder set(int position, Object... objs) {
+            this.position = position;
+            this.objs = objs;
+            return this;
+        }
+
         public static ItemInfoHolder attach(View v, int position, Object... objs) {
-            ItemInfoHolder itemInfoHolder = new ItemInfoHolder(position, objs);
-            v.setTag(itemInfoHolder);
+            ItemInfoHolder itemInfoHolder = (ItemInfoHolder) v.getTag();
+            if (itemInfoHolder == null) {
+                itemInfoHolder = new ItemInfoHolder(position, objs);
+                v.setTag(itemInfoHolder);
+            }
+            itemInfoHolder.set(position, objs);
             return itemInfoHolder;
         }
     }
