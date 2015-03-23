@@ -29,4 +29,5 @@ dependencies {
     compile "com.raizlabs.android:DBFlow:1.7.2"
     compile 'com.github.dexafree:materiallist:2.3.2'
     compile 'com.joanzapata.android:base-adapter-helper:1.1.11'
+    compile 'com.bluelinelabs:logansquare:1.0.6'
 }
