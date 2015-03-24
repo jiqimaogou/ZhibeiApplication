@@ -5,6 +5,7 @@ import android.app.Application;
 import com.zhibeifw.frameworks.module.AndroidModule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dagger.ObjectGraph;
@@ -18,7 +19,7 @@ public class DaggerApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
 
-        // graph = ObjectGraph.create(getModules().toArray());
+        graph = ObjectGraph.create(getModules().toArray());
     }
 
     protected List<Object> getModules() {
@@ -33,7 +34,6 @@ public class DaggerApplication extends Application {
     }
 
     protected List<Object> getApplicationModules() {
-        List<Object> applicationModules = new ArrayList<Object>();
-        return applicationModules;
+        return Collections.emptyList();
     }
 }

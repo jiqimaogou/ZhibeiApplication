@@ -26,5 +26,5 @@ dependencies {
     compile project(':frameworks')
     compile 'it.neokree:MaterialNavigationDrawer:1.+'
     apt 'com.raizlabs.android:DBFlow-Compiler:1.7.2'
-    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
+    apt 'com.squareup.dagger:dagger-compiler:1.+'
 }
