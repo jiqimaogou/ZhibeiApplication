@@ -1,5 +1,6 @@
 package com.zhibeifw.zhibeiapplication.model;
 
+import com.google.gson.annotations.Expose;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ContainerAdapter;
 import com.raizlabs.android.dbflow.annotation.ContainerKey;
@@ -13,16 +14,20 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @ContainerAdapter
 public class Syllabus extends BaseModel {
 
+    @Expose
     @ContainerKey("_id")
     @Column(columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
     long id;
 
+    @Expose
     @Column
     String syllabus;
 
+    @Expose
     @Column
     String push_content;
 
+    @Expose
     @Column
     long updated_at;
 

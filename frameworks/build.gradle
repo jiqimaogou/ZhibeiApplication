@@ -32,4 +32,5 @@ dependencies {
     compile 'com.joanzapata.android:base-adapter-helper:1.1.11'
     compile 'com.bluelinelabs:logansquare:1.0.6'
     apt 'com.squareup.dagger:dagger-compiler:1.+'
+    compile 'io.reactivex:rxandroid:0.24.0'
 }
