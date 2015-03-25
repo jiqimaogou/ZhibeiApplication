@@ -31,7 +31,7 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DaggerApplication) getActivity().getApplication()).inject(this);
-        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_big_image_card_layout, new Select().from(Syllabus.class).where().queryCursorList()) {
+        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_basic_buttons_card, new Select().from(Syllabus.class).where().queryCursorList()) {
             @Override
             protected void convert(BaseAdapterHelper helper, Syllabus syllabus) {
                 /* boolean isRetweet = status.isRetweet();

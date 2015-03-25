@@ -20,7 +20,7 @@ import retrofit.converter.GsonConverter;
 @Module(injects = SyllabusListFragment.class)
     public class ZhibeiModule {
 
-        private static final String BASE_URL = "http://115.29.6.248:3200/api/v1";
+        private static final String BASE_URL = "https://gentle-eyrie-3479.herokuapp.com";
 
         @Provides
         @Singleton

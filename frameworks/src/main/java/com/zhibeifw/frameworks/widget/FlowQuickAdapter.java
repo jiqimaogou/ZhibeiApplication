@@ -1,5 +1,6 @@
 package com.zhibeifw.frameworks.widget;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.joanzapata.android.QuickAdapter;
@@ -72,6 +73,13 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
     }
 
     public void refresh() {
-        replaceAll(getAll());
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                replaceAll(getAll());
+            }
+        });
     }
 }
