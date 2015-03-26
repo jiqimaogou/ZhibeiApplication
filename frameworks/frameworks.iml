@@ -87,6 +87,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="rxandroid-0.24.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="paginglistview-1.2" level="project" />
     <orderEntry type="library" exported="" name="dagger-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="lib-manipulation-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.4" level="project" />

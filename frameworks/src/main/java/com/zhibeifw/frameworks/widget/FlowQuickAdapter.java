@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.joanzapata.android.QuickAdapter;
-import com.raizlabs.android.dbflow.list.FlowCursorList;
+import com.raizlabs.android.dbflow.list.FlowTableList;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.structure.Model;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/3/22 0022.
@@ -18,9 +16,17 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
     /**
      * Holds the table cursor
      */
-    private FlowCursorList<ModelClass> mCursorList;
+    private FlowTableList<ModelClass> mFlowTableList;
 
     private FlowContentObserver mFlowContentObserver = new FlowContentObserver();
+
+    private Runnable replaceAllAction = new Runnable() {
+        @Override
+        public void run() {
+            replaceAll(mFlowTableList.getAll());
+        }
+    };
+
 
     /**
      * Create a QuickAdapter.
@@ -28,9 +34,9 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
      * @param context     The context.
      * @param layoutResId The layout resource id of each item.
      */
-    protected FlowQuickAdapter(Context context, int layoutResId, FlowCursorList<ModelClass> mCursorList) {
+    protected FlowQuickAdapter(Context context, int layoutResId, FlowTableList<ModelClass> flowTableList) {
         super(context, layoutResId);
-        setCursorList(mCursorList);
+        setFlowTableList(flowTableList);
         FlowContentObserver.ModelChangeListener modelChangeListener = new FlowContentObserver.ModelChangeListener() {
             @Override
             public void onModelChanged() {
@@ -61,25 +67,14 @@ public abstract class FlowQuickAdapter<ModelClass extends Model>  extends QuickA
         mFlowContentObserver.addModelChangeListener(modelChangeListener);
     }
 
-    public void setCursorList(FlowCursorList<ModelClass> mCursorList) {
-        this.mCursorList = mCursorList;
+    public void setFlowTableList(FlowTableList<ModelClass> flowTableList) {
+        this.mFlowTableList = flowTableList;
         mFlowContentObserver.unregisterForContentChanges(context);
-        mFlowContentObserver.registerForContentChanges(context, mCursorList.getTable());
+        mFlowContentObserver.registerForContentChanges(context, flowTableList.getCursorList().getTable());
         refresh();
     }
 
-    public List<ModelClass> getAll() {
-        return mCursorList.getAll();
-    }
-
     public void refresh() {
-
-        ((Activity) context).runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                replaceAll(getAll());
-            }
-        });
+        ((Activity) context).runOnUiThread(replaceAllAction);
     }
 }

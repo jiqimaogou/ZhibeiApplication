@@ -120,7 +120,7 @@ public class ListFragment extends Fragment {
         lframe.addView(tv, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
         
-        View lv = onCreateListView(inflater, container, savedInstanceState);
+        View lv = onCreateListView(inflater, lframe, savedInstanceState);
         // ListView lv = new ListView(getActivity());
         // lv.setId(android.R.id.list);
         // lv.setDrawSelectorOnTop(false);

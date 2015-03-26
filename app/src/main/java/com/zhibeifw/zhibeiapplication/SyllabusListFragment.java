@@ -1,7 +1,7 @@
 package com.zhibeifw.zhibeiapplication;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
 import com.joanzapata.android.BaseAdapterHelper;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -31,7 +32,7 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DaggerApplication) getActivity().getApplication()).inject(this);
-        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_basic_buttons_card, new Select().from(Syllabus.class).where().queryCursorList()) {
+        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_basic_buttons_card, new Select().from(Syllabus.class).where().queryTableList()) {
             @Override
             protected void convert(BaseAdapterHelper helper, Syllabus syllabus) {
                 /* boolean isRetweet = status.isRetweet();
@@ -46,6 +47,11 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                 helper.setText(R.id.titleTextView, syllabus.getSyllabus());
             }
         });
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        super.onRefreshStarted(view);
         zhibeiservice.listSyllabuses()
             .doOnNext(new Action1<List<Syllabus>>() {
                 @Override
@@ -59,18 +65,27 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                     }
                 }
             })
-            .doOnError(new Action1<Throwable>() {
+            .observeOn(AndroidSchedulers.mainThread())
+            .finallyDo(new Action0() {
                 @Override
-                public void call(Throwable throwable) {
-                    Log.e(TAG, throwable.getMessage());
+                public void call() {
+                    setRefreshComplete();
                 }
             })
-            .finallyDo(new Action0() {
+            .subscribe(new Action1<List<Syllabus>>() {
+                @Override
+                public void call(List<Syllabus> syllabuses) {
+                }
+            }, new Action1<Throwable>() {
+                @Override
+                public void call(Throwable throwable) {
+                    System.out.println("Hello, World");
+                }
+            }, new Action0() {
                 @Override
                 public void call() {
 
                 }
-            })
-            .subscribe();
+            });
     }
 }
