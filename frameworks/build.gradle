@@ -34,4 +34,6 @@ dependencies {
     apt 'com.squareup.dagger:dagger-compiler:1.+'
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.github.nicolasjafelle:paginglistview:1.2'
+    compile 'com.pnikosis:materialish-progress:1.5'
+
 }
