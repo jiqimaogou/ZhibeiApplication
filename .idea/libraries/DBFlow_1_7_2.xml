@@ -8,8 +8,6 @@
       <root url="file://$PROJECT_DIR$/frameworks/build/intermediates/exploded-aar/com.raizlabs.android/DBFlow/1.7.2/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.raizlabs.android/DBFlow/1.7.2/f9176862d8cc70a00ccce2582fb3378877ca37d1/DBFlow-1.7.2-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

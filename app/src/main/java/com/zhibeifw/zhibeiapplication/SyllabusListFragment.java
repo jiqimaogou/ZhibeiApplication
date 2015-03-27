@@ -32,7 +32,7 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DaggerApplication) getActivity().getApplication()).inject(this);
-        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_basic_buttons_card, new Select().from(Syllabus.class).where().queryTableList()) {
+        setListAdapter(new FlowQuickAdapter<Syllabus>(getActivity(), R.layout.material_basic_image_buttons_card_layout, new Select().from(Syllabus.class).where().queryTableList()) {
             @Override
             protected void convert(BaseAdapterHelper helper, Syllabus syllabus) {
                 /* boolean isRetweet = status.isRetweet();
@@ -44,7 +44,8 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                    .setText(tweetDate, dateFormat.format(status.getCreatedAt()))
                    .setImageUrl(tweetAvatar, status.getUser().getProfileImageURL())
                    .linkify(tweetText); */
-                helper.setText(R.id.titleTextView, syllabus.getSyllabus());
+                helper.setText(R.id.titleTextView, syllabus.getSyllabus())
+                   .setText(R.id.descriptionTextView, syllabus.getPush_content());
             }
         });
     }
