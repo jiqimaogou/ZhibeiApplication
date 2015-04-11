@@ -17,7 +17,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.goncalves.pugnotification.notification.PugNotification;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -75,11 +74,11 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                 @Override
                 public void call(Throwable throwable) {
                     Log.e(TAG, throwable.getMessage());
-                    PugNotification.with(getActivity())
+                    /* PugNotification.with(getActivity())
                             .load()
                             .message(throwable.getMessage())
                             .simple()
-                            .build();
+                            .build(); */
                     NiftyNotificationView.build(getActivity(), throwable.getMessage(), Effects.flip, R.id.frame_container)
                         // .setIcon(R.drawable.lion)    //You must call this method if you use ThumbSlider effect
                         .show();
