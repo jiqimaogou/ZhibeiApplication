@@ -22,6 +22,13 @@ import retrofit.converter.GsonConverter;
 
         private static final String BASE_URL = "https://gentle-eyrie-3479.herokuapp.com";
 
+        /* private static final ErrorHandler ERROR_HANDLER = new ErrorHandler() {
+            @Override
+            public Throwable handleError(RetrofitError retrofitError) {
+                // return new APIException(retrofitError);
+            }
+        }; */
+
         @Provides
         @Singleton
         RestAdapter provideRestAdapter() { 
@@ -41,7 +48,8 @@ import retrofit.converter.GsonConverter;
                 .setEndpoint(BASE_URL)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE) 
+                // .setErrorHandler(ERROR_HANDLER)
                 .build(); 
             return restAdapter;
         }

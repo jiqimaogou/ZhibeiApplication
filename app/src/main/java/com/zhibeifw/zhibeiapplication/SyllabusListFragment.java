@@ -1,13 +1,15 @@
 package com.zhibeifw.zhibeiapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.gitonway.lee.niftynotification.lib.Effects;
+import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
 import com.joanzapata.android.BaseAdapterHelper;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.zhibeifw.frameworks.app.ActionBarPullToRefreshListFragment;
 import com.zhibeifw.frameworks.app.DaggerApplication;
-import com.zhibeifw.frameworks.rx.observers.ProgressDialogSubscriber;
 import com.zhibeifw.frameworks.widget.FlowQuickAdapter;
 import com.zhibeifw.zhibeiapplication.model.Syllabus;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.goncalves.pugnotification.notification.PugNotification;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -68,14 +71,28 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                 }
             })
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnError(new Action1<Throwable>() {
+                @Override
+                public void call(Throwable throwable) {
+                    Log.e(TAG, throwable.getMessage());
+                    PugNotification.with(getActivity())
+                            .load()
+                            .message(throwable.getMessage())
+                            .simple()
+                            .build();
+                    NiftyNotificationView.build(getActivity(), throwable.getMessage(), Effects.flip, R.id.frame_container)
+                        // .setIcon(R.drawable.lion)    //You must call this method if you use ThumbSlider effect
+                        .show();
+                }
+            })
             .finallyDo(new Action0() {
                 @Override
                 public void call() {
                     setRefreshComplete();
                 }
             })
-            .subscribe(new ProgressDialogSubscriber(getActivity()));
-            /* .subscribe(new Action1<List<Syllabus>>() {
+            // .subscribe(new ProgressDialogSubscriber(getActivity()));
+            .subscribe(new Action1<List<Syllabus>>() {
                 @Override
                 public void call(List<Syllabus> syllabuses) {
                 }
@@ -89,6 +106,6 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                 public void call() {
 
                 }
-            }); */
+            }); 
     }
 }

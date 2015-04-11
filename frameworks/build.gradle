@@ -24,17 +24,21 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.dagger:dagger:1.+'
-    compile "com.raizlabs.android:DBFlow-Core:1.7.2"
-    compile "com.raizlabs.android:DBFlow:1.7.2"
+    compile 'com.raizlabs.android:DBFlow-Core:1.7.2'
+    compile 'com.raizlabs.android:DBFlow:1.7.2'
     compile 'com.github.dexafree:materiallist:2.3.2'
     compile 'com.joanzapata.android:base-adapter-helper:1.1.11'
     compile 'com.bluelinelabs:logansquare:1.0.6'
     apt 'com.squareup.dagger:dagger-compiler:1.+'
     compile 'io.reactivex:rxandroid:0.24.0'
-
     compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
     compile 'com.melnykov:floatingactionbutton:1.2.0'
     compile 'com.github.nicolasjafelle:paginglistview:1.2'
     compile 'com.pnikosis:materialish-progress:1.5'
     compile 'com.github.rey5137:material:1.1.0'
+    compile 'com.github.halysongoncalves:pugnotification:1.0.2'
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
 }
