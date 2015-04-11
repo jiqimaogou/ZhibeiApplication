@@ -1,11 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loading_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_margin="@dimen/loading_view_margin_layout"
     android:orientation="horizontal">
+
+    <!-- <com.rey.material.widget.ProgressView
+        android:id="@+id/progress_pv_circular_colors"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        app:pv_autostart = "false"
+        app:pv_circular="true"
+        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
+        app:pv_progressMode="indeterminate"/> -->
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/progress_wheel"

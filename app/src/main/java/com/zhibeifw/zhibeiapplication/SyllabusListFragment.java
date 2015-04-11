@@ -7,6 +7,7 @@ import com.joanzapata.android.BaseAdapterHelper;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.zhibeifw.frameworks.app.ActionBarPullToRefreshListFragment;
 import com.zhibeifw.frameworks.app.DaggerApplication;
+import com.zhibeifw.frameworks.rx.observers.ProgressDialogSubscriber;
 import com.zhibeifw.frameworks.widget.FlowQuickAdapter;
 import com.zhibeifw.zhibeiapplication.model.Syllabus;
 
@@ -73,7 +74,8 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                     setRefreshComplete();
                 }
             })
-            .subscribe(new Action1<List<Syllabus>>() {
+            .subscribe(new ProgressDialogSubscriber(getActivity()));
+            /* .subscribe(new Action1<List<Syllabus>>() {
                 @Override
                 public void call(List<Syllabus> syllabuses) {
                 }
@@ -87,6 +89,6 @@ public class SyllabusListFragment extends ActionBarPullToRefreshListFragment {
                 public void call() {
 
                 }
-            });
+            }); */
     }
 }
