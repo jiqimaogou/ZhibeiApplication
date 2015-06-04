@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.zhibeifw.frameworks.R;
-
 /**
  * Created by Administrator on 2015/3/23 0023.
  */
 public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListener {
 
-    private int[] images;
+    private int[] mImages;
 
     private Context mContext;
 
@@ -29,14 +27,14 @@ public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListe
     };
 
     public ImagePagerAdapter(Context context, int... images) {
-        this.mContext = context;
+        mContext = context;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.images = images;
+        mImages = images;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return mImages.length;
     }
 
     @Override
@@ -46,23 +44,23 @@ public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListe
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        ImageView view = getImageView();
-        view.setImageResource(images[position]);
+        ImageView view = getImageView(container, mInflater);
+        view.setImageResource(mImages[position]);
         view.setOnClickListener(mClickListener);
-        ItemViewOnClickListener.ItemInfoHolder itemInfoHolder = ItemViewOnClickListener.ItemInfoHolder.attach(view, position, images[position]);
+        ItemViewOnClickListener.ItemInfoHolder itemInfoHolder = ItemViewOnClickListener.ItemInfoHolder.attach(view,
+                                                                                                              position,
+                                                                                                              mImages[position]);
         // added to ViewPager, container == ViewPager
         container.addView(view);
         return view;
     }
 
-    protected ImageView getImageView() {
-        return (ImageView) mInflater.inflate(
-                R.layout.list_item_image, null);
+    protected ImageView getImageView(ViewGroup container, LayoutInflater inflater) {
+        return new ImageView(mContext);
     }
 
     @Override
-    public void
-    destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
 

@@ -1,10 +1,7 @@
 package com.zhibeifw.zhibeiapplication;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.zhibeifw.frameworks.app.DaggerApplication;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.zhibeifw.frameworks.module.DaggerApplication;
 
 public class ZhibeiApplication extends DaggerApplication {
 
@@ -20,10 +17,4 @@ public class ZhibeiApplication extends DaggerApplication {
         FlowManager.destroy();
     }
 
-    @Override
-    protected List<Object> getModules() {
-        List<Object> modules = new ArrayList<Object>();
-        modules.add(new ZhibeiModule());
-        return modules;
-    }
 }

@@ -2,7 +2,7 @@ package com.zhibeifw.zhibeiapplication;
 
 import android.os.Bundle;
 
-import com.zhibeifw.frameworks.app.test.ActionBarPullToRefreshListFragmentTest;
+import com.zhibeifw.zhibeiapplication.syllabus.OnlineRoomListFragment;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
@@ -11,9 +11,7 @@ public class MainActivity extends MaterialNavigationDrawer {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        this.addSection(newSection(getString(R.string.puja),R.drawable.ic_puja,new ActionBarPullToRefreshListFragmentTest()));
-        this.addSection(newSection(getString(R.string.syllabus),R.drawable.ic_puja,new SyllabusListFragment()));
-
+        this.addSection(newSection(getString(R.string.puja), R.drawable.ic_puja, new OnlineRoomListFragment()));
     }
 
     /* @Override

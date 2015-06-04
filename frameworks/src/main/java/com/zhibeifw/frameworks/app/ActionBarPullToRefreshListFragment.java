@@ -11,8 +11,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 /**
  * Created by Administrator on 2015/3/22 0022.
  */
-public class ActionBarPullToRefreshListFragment extends PagingListFragment
-    implements OnRefreshListener {
+public class ActionBarPullToRefreshListFragment extends PagingListFragment implements OnRefreshListener, IPullToRefresh {
 
     private PullToRefreshLayout mPullToRefreshLayout;
 
@@ -39,19 +38,23 @@ public class ActionBarPullToRefreshListFragment extends PagingListFragment
 
     }
 
-    public PullToRefreshLayout getPullToRefreshLayout() {
-        return mPullToRefreshLayout;
-    }
-
+    @Override
     public void setRefreshComplete() {
         getPullToRefreshLayout().setRefreshComplete();
     }
 
+    @Override
     public boolean isRefreshing() {
         return getPullToRefreshLayout().isRefreshing();
     }
 
+    @Override
     public void setRefreshing(boolean refreshing) {
         getPullToRefreshLayout().setRefreshing(refreshing);
     }
+
+    public PullToRefreshLayout getPullToRefreshLayout() {
+        return mPullToRefreshLayout;
+    }
+
 }
