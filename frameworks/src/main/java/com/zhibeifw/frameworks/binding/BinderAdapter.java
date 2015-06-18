@@ -48,7 +48,7 @@ import java.util.List;
  * or to have some of data besides toString() results fill the views,
  * override {@link #getView(int, View, ViewGroup)} to return the type of view you want.
  */
-public class BinderAdapter<T> extends BaseAdapter implements Filterable {
+public class BinderAdapter<T> extends BaseAdapter implements Filterable, CollectionAdapter<T> {
     /**
      * Contains the list of objects that represent the data of this BinderAdapter.
      * The content of this list is referred to as "the array" in the documentation.
@@ -76,13 +76,6 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
     private int mDropDownResource;
 
     /**
-     * If the inflated resource is not a TextView, {@link #mFieldId} is used to find
-     * a TextView inside the inflated views hierarchy. This field must contain the
-     * identifier that matches the one defined in the resource file.
-     */
-    private int mFieldId = 0;
-
-    /**
      * Indicates whether or not {@link #notifyDataSetChanged()} must be called whenever
      * {@link #mObjects} is modified.
      */
@@ -105,19 +98,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      *                 instantiating views.
      */
     public BinderAdapter(Context context, int resource) {
-        init(context, resource, 0, new ArrayList<T>());
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     */
-    public BinderAdapter(Context context, int resource, int textViewResourceId) {
-        init(context, resource, textViewResourceId, new ArrayList<T>());
+        init(context, resource, new ArrayList<T>());
     }
 
     /**
@@ -129,20 +110,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      * @param objects  The objects to represent in the ListView.
      */
     public BinderAdapter(Context context, int resource, T[] objects) {
-        init(context, resource, 0, Arrays.asList(objects));
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     * @param objects            The objects to represent in the ListView.
-     */
-    public BinderAdapter(Context context, int resource, int textViewResourceId, T[] objects) {
-        init(context, resource, textViewResourceId, Arrays.asList(objects));
+        init(context, resource, Arrays.asList(objects));
     }
 
     /**
@@ -154,20 +122,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      * @param objects  The objects to represent in the ListView.
      */
     public BinderAdapter(Context context, int resource, List<T> objects) {
-        init(context, resource, 0, objects);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     * @param objects            The objects to represent in the ListView.
-     */
-    public BinderAdapter(Context context, int resource, int textViewResourceId, List<T> objects) {
-        init(context, resource, textViewResourceId, objects);
+        init(context, resource, objects);
     }
 
     /**
@@ -175,6 +130,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      *
      * @param object The object to add at the end of the array.
      */
+    @Override
     public void add(T object) {
         synchronized (mLock) {
             if (mOriginalValues != null) {
@@ -192,6 +148,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      *
      * @param collection The Collection to add at the end of the array.
      */
+    @Override
     public void addAll(Collection<? extends T> collection) {
         synchronized (mLock) {
             if (mOriginalValues != null) {
@@ -209,6 +166,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      *
      * @param items The items to add at the end of the array.
      */
+    @Override
     public void addAll(T... items) {
         synchronized (mLock) {
             if (mOriginalValues != null) {
@@ -227,6 +185,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      * @param object The object to insert into the array.
      * @param index  The index at which the object must be inserted.
      */
+    @Override
     public void insert(T object, int index) {
         synchronized (mLock) {
             if (mOriginalValues != null) {
@@ -244,6 +203,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      *
      * @param object The object to remove.
      */
+    @Override
     public void remove(T object) {
         synchronized (mLock) {
             if (mOriginalValues != null) {
@@ -259,12 +219,28 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
     /**
      * Remove all elements from the list.
      */
+    @Override
     public void clear() {
         synchronized (mLock) {
             if (mOriginalValues != null) {
                 mOriginalValues.clear();
             } else {
                 mObjects.clear();
+            }
+        }
+        if (mNotifyOnChange)
+            notifyDataSetChanged();
+    }
+
+    @Override
+    public void replaceAll(List<T> elem) {
+        synchronized (mLock) {
+            if (mOriginalValues != null) {
+                mOriginalValues.clear();
+                mOriginalValues.addAll(elem);
+            } else {
+                mObjects.clear();
+                mObjects.addAll(elem);
             }
         }
         if (mNotifyOnChange)
@@ -316,12 +292,11 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
         mNotifyOnChange = notifyOnChange;
     }
 
-    private void init(Context context, int resource, int textViewResourceId, List<T> objects) {
+    private void init(Context context, int resource, List<T> objects) {
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mResource = mDropDownResource = resource;
         mObjects = objects;
-        mFieldId = textViewResourceId;
     }
 
     /**
@@ -385,13 +360,9 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
             binding = DataBindingUtil.getBinding(view);
         }
 
-        setVariable(binding, getItem(position));
+        binding.setVariable(1, item);
+        binding.executePendingBindings();
         return view;
-    }
-
-    protected <V extends ViewDataBinding> void setVariable(V viewDataBinding, T item) {
-        viewDataBinding.setVariable(1, item);
-        viewDataBinding.executePendingBindings();
     }
 
     /**
@@ -421,7 +392,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable {
      * @param textViewResId  The identifier of the layout used to create views.
      * @return An BinderAdapter<CharSequence>.
      */
-    public static BinderAdapter<CharSequence> createFromResource(Context context, int textArrayResId,
+    public static CollectionAdapter<CharSequence> createFromResource(Context context, int textArrayResId,
             int textViewResId) {
         CharSequence[] strings = context.getResources().getTextArray(textArrayResId);
         return new BinderAdapter<CharSequence>(context, textViewResId, strings);

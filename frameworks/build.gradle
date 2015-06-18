@@ -45,4 +45,10 @@ dependencies {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
+    compile('com.github.florent37:materialviewpager:1.0.4@aar') {
+        transitive = true
+    }
+    compile('com.mikepenz:materialdrawer:3.0.7@aar') {
+        transitive = true
+    }
 }

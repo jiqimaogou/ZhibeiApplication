@@ -1,7 +1,6 @@
 package com.zhibeifw.frameworks.view;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 /**
  * Created by Administrator on 2015/3/23 0023.
  */
-public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListener {
+public class ImagePagerAdapter extends BasePagerAdapter implements View.OnClickListener {
 
     private int[] mImages;
 
@@ -28,18 +27,13 @@ public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListe
 
     public ImagePagerAdapter(Context context, int... images) {
         mContext = context;
-        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImages = images;
     }
 
     @Override
     public int getCount() {
         return mImages.length;
-    }
-
-    @Override
-    public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0 == (View) arg1;
     }
 
     @Override
@@ -59,11 +53,6 @@ public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListe
         return new ImageView(mContext);
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
     /**
      * Called when a view has been clicked.
      *
@@ -71,10 +60,10 @@ public class ImagePagerAdapter extends PagerAdapter implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
-        
+
     }
 
     public void onClick(View v, int position, Object object) {
-        
+
     }
 }

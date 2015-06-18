@@ -19,6 +19,5 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
     }
 }

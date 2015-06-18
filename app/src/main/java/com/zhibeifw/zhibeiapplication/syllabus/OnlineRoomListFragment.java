@@ -1,14 +1,12 @@
 package com.zhibeifw.zhibeiapplication.syllabus;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.content.Loader;
 import android.view.View;
+import android.widget.ListAdapter;
 
 import com.android.volley.Request;
 import com.zhibeifw.frameworks.app.ActionBarPullToRefreshListFragment;
 import com.zhibeifw.frameworks.module.DaggerApplication;
-import com.zhibeifw.zhibeiapplication.ZhibeiModule;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -19,22 +17,28 @@ import javax.inject.Provider;
 public class OnlineRoomListFragment extends ActionBarPullToRefreshListFragment {
     private SyllabusComponent component;
 
+    private OnlineRoom onlineRoom;
+
     @Inject
     Provider<Request> requestProvider;
 
     @Inject
-    Loader<Cursor> loader;
+    ListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            onlineRoom = getArguments().getParcelable(OnlineRoom.class.getName());
+        }
         this.component = DaggerSyllabusComponent.builder()
                                                 .applicationComponent(((DaggerApplication) getActivity().getApplication())
                                                                               .getComponent())
-                                                .zhibeiModule(new ZhibeiModule(this))
+                                                .dataModule(new SyllabusModule(this))
                                                 .build();
 
         this.component.inject(this);
+        setListAdapter(adapter);
     }
 
     @Override

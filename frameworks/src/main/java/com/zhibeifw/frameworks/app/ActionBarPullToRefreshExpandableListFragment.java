@@ -20,7 +20,7 @@ public class ActionBarPullToRefreshExpandableListFragment extends ExpandableList
         super.onViewCreated(view, savedInstanceState);
         ViewGroup viewGroup = (ViewGroup) view;
 
-        // As we're using a ListFragment we create a PullToRefreshLayout manually
+        // As we're using a ViewPagerFragment we create a PullToRefreshLayout manually
         mPullToRefreshLayout = new PullToRefreshLayout(viewGroup.getContext());
 
         // We can now setup the PullToRefreshLayout

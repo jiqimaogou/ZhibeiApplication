@@ -1,8 +1,10 @@
 package com.zhibeifw.frameworks.app;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 
 import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -15,22 +17,39 @@ public class ActionBarPullToRefreshListFragment extends PagingListFragment imple
 
     private PullToRefreshLayout mPullToRefreshLayout;
 
+    DataSetObserver mDataSetObserver;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
         ViewGroup viewGroup = (ViewGroup) view;
 
-        // As we're using a ListFragment we create a PullToRefreshLayout manually
+        // As we're using a ViewPagerFragment we create a PullToRefreshLayout manually
         mPullToRefreshLayout = new PullToRefreshLayout(viewGroup.getContext());
 
         // We can now setup the PullToRefreshLayout
         ActionBarPullToRefresh.from(getActivity())
-            // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
-            .insertLayoutInto(viewGroup)
-            // Here we mark just the ListView and it's Empty View as pullable
-            .theseChildrenArePullable(android.R.id.list, android.R.id.empty)
-            .listener(this)
-            .setup(mPullToRefreshLayout);
+                // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
+                .insertLayoutInto(viewGroup)
+                        // Here we mark just the ListView and it's Empty View as pullable
+                .theseChildrenArePullable(android.R.id.list, android.R.id.empty)
+                .listener(this)
+                .setup(mPullToRefreshLayout);
+
+        if (mAdapter != null && mDataSetObserver == null) {
+            mDataSetObserver = new MyDataSetObserver();
+            mAdapter.registerDataSetObserver(mDataSetObserver);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mAdapter != null && mDataSetObserver != null) {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+            mDataSetObserver = null;
+        }
+
+        super.onDestroyView();
     }
 
     @Override
@@ -57,4 +76,31 @@ public class ActionBarPullToRefreshListFragment extends PagingListFragment imple
         return mPullToRefreshLayout;
     }
 
+    @Override
+    public void setListAdapter(ListAdapter adapter) {
+        if (null != mAdapter) {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+        }
+
+        if (adapter != null) {
+            mDataSetObserver = new MyDataSetObserver();
+            adapter.registerDataSetObserver(mDataSetObserver);
+        }
+
+        super.setListAdapter(adapter);
+    }
+
+    private class MyDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            setRefreshComplete();
+        }
+
+        @Override
+        public void onInvalidated() {
+            super.onInvalidated();
+            setRefreshComplete();
+        }
+    }
 }

@@ -1,85 +1,65 @@
-/*
- * Copyright (C) 2011 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.zhibeifw.frameworks.app;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.zhibeifw.frameworks.R;
+
 /**
- * Static library support version of the framework's {@link android.app.ListFragment}.
+ * Static library support version of the framework's {@link android.app.ViewPagerFragment}.
  * Used to write apps that run on platforms prior to Android 3.0.  When running
  * on Android 3.0 or above, this implementation is still used; it does not try
  * to switch to the framework's implementation.  See the framework SDK
  * documentation for a class overview.
  */
-public class ExpandableListFragment extends BaseFragment {
+public class ViewPagerFragment extends Fragment {
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
     static final int INTERNAL_PROGRESS_CONTAINER_ID = 0x00ff0002;
-    static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
+    static final int INTERNAL_VIEW_PAGER_CONTAINER_ID = 0x00ff0003;
 
     final private Handler mHandler = new Handler();
 
     final private Runnable mRequestFocus = new Runnable() {
         public void run() {
-            mList.focusableViewAvailable(mList);
+            mViewPager.focusableViewAvailable(mViewPager);
         }
     };
 
-    final private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ExpandableListView) parent, v, position, id);
-        }
-    };
-
-    BaseExpandableListAdapter mAdapter;
-    ExpandableListView mList;
+    PagerAdapter mAdapter;
+    ViewPager mViewPager;
     View mEmptyView;
     TextView mStandardEmptyView;
     View mProgressContainer;
-    View mListContainer;
+    View mViewPagerContainer;
     CharSequence mEmptyText;
-    boolean mListShown;
+    boolean mViewPagerShown;
 
-    public ExpandableListFragment() {
+    public ViewPagerFragment() {
     }
 
     /**
-     * Provide default implementation to return a simple list view.  Subclasses
+     * Provide default implementation to return a simple ViewPager view.  Subclasses
      * can override to replace with their own layout.  If doing so, the
-     * returned view hierarchy <em>must</em> have a ExpandableListView whose id
-     * is {@link android.R.id#list android.R.id.list} and can optionally
+     * returned view hierarchy <em>must</em> have a ViewPager whose id
+     * is {@link android.R.id#ViewPager R.id.viewPager} and can optionally
      * have a sibling view id {@link android.R.id#empty android.R.id.empty}
-     * that is to be shown when the list is empty.
+     * that is to be shown when the ViewPager is empty.
      * <p/>
      * <p>If you are overriding this method with your own custom content,
-     * consider including the standard layout {@link android.R.layout#list_content}
+     * consider including the standard layout {@link R.layout#viewpager_content}
      * in your layout file, so that you continue to retain all of the standard
      * behavior of ViewPagerFragment.  In particular, this is currently the only
      * way to have the built-in indeterminant progress state be shown.
@@ -110,7 +90,7 @@ public class ExpandableListFragment extends BaseFragment {
         // ------------------------------------------------------------------
 
         FrameLayout lframe = new FrameLayout(context);
-        lframe.setId(INTERNAL_LIST_CONTAINER_ID);
+        lframe.setId(INTERNAL_VIEW_PAGER_CONTAINER_ID);
 
         TextView tv = new TextView(getActivity());
         tv.setId(INTERNAL_EMPTY_ID);
@@ -119,10 +99,7 @@ public class ExpandableListFragment extends BaseFragment {
                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                                                     ViewGroup.LayoutParams.FILL_PARENT));
 
-        View lv = onCreateExpandableListView(inflater, lframe, savedInstanceState);
-        // ExpandableListView lv = new ExpandableListView(getActivity());
-        // lv.setId(android.R.id.list);
-        // lv.setDrawSelectorOnTop(false);
+        View lv = onCreateViewPager(inflater, container, savedInstanceState);
         lframe.addView(lv,
                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                                                     ViewGroup.LayoutParams.FILL_PARENT));
@@ -139,204 +116,173 @@ public class ExpandableListFragment extends BaseFragment {
         return root;
     }
 
-    // @Override
-    public View onCreateExpandableListView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ExpandableListView lv = new ExpandableListView(getActivity());
-        lv.setId(android.R.id.list);
-        lv.setDrawSelectorOnTop(false);
+    public View onCreateViewPager(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewPager viewPager = new ViewPager(getActivity());
+        viewPager.setId(R.id.viewPager);
 
-        return lv;
+        return viewPager;
     }
 
     /**
-     * Attach to list view once the view hierarchy has been created.
+     * Attach to ViewPager view once the view hierarchy has been created.
      */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ensureList();
+        ensureViewPager();
     }
 
     /**
-     * Detach from list view.
+     * Detach from ViewPager view.
      */
     @Override
     public void onDestroyView() {
         mHandler.removeCallbacks(mRequestFocus);
-        mList = null;
-        mListShown = false;
-        mEmptyView = mProgressContainer = mListContainer = null;
+        mViewPager = null;
+        mViewPagerShown = false;
+        mEmptyView = mProgressContainer = mViewPagerContainer = null;
         mStandardEmptyView = null;
         super.onDestroyView();
     }
 
     /**
-     * This method will be called when an item in the list is selected.
+     * This method will be called when an item in the ViewPager is selected.
      * Subclasses should override. Subclasses can call
-     * getExpandableListView().getItemAtPosition(position) if they need to access the
+     * getViewPagerView().getItemAtPosition(position) if they need to access the
      * data associated with the selected item.
      *
-     * @param l        The ExpandableListView where the click happened
-     * @param v        The view that was clicked within the ExpandableListView
-     * @param position The position of the view in the list
+     * @param l        The ViewPager where the click happened
+     * @param v        The view that was clicked within the ViewPager
+     * @param position The position of the view in the ViewPager
      * @param id       The row id of the item that was clicked
      */
-    public void onListItemClick(ExpandableListView l, View v, int position, long id) {
+    public void onViewPagerItemClick(ViewPager l, View v, int position, long id) {
     }
 
     /**
-     * Provide the cursor for the list view.
+     * Provide the cursor for the ViewPager view.
      */
-    public void setListAdapter(BaseExpandableListAdapter adapter) {
+    public void setPagerAdapter(PagerAdapter adapter) {
         boolean hadAdapter = mAdapter != null;
         mAdapter = adapter;
-        if (mList != null) {
-            mList.setAdapter(adapter);
-            if (!mListShown && !hadAdapter) {
-                // The list was hidden, and previously didn't have an
+        if (mViewPager != null) {
+            mViewPager.setAdapter(adapter);
+            if (!mViewPagerShown && !hadAdapter) {
+                // The ViewPager was hidden, and previously didn't have an
                 // adapter.  It is now time to show it.
-                setListShown(true, getView().getWindowToken() != null);
+                setViewPagerShown(true, getView().getWindowToken() != null);
             }
         }
     }
 
     /**
-     * Set the currently selected list item to the specified
-     * position with the adapter's data
-     *
-     * @param position
+     * Get the activity's ViewPager view widget.
      */
-    public void setSelection(int position) {
-        ensureList();
-        mList.setSelection(position);
-    }
-
-    /**
-     * Get the position of the currently selected list item.
-     */
-    public int getSelectedItemPosition() {
-        ensureList();
-        return mList.getSelectedItemPosition();
-    }
-
-    /**
-     * Get the cursor row ID of the currently selected list item.
-     */
-    public long getSelectedItemId() {
-        ensureList();
-        return mList.getSelectedItemId();
-    }
-
-    /**
-     * Get the activity's list view widget.
-     */
-    public ExpandableListView getExpandableListView() {
-        ensureList();
-        return mList;
+    public ViewPager getViewPager() {
+        ensureViewPager();
+        return mViewPager;
     }
 
     /**
      * The default content for a ViewPagerFragment has a TextView that can
-     * be shown when the list is empty.  If you would like to have it
+     * be shown when the ViewPager is empty.  If you would like to have it
      * shown, call this method to supply the text it should use.
      */
     public void setEmptyText(CharSequence text) {
-        ensureList();
+        ensureViewPager();
         if (mStandardEmptyView == null) {
             throw new IllegalStateException("Can't be used with a custom content view");
         }
         mStandardEmptyView.setText(text);
-        if (mEmptyText == null) {
-            mList.setEmptyView(mStandardEmptyView);
-        }
         mEmptyText = text;
     }
 
     /**
-     * Control whether the list is being displayed.  You can make it not
+     * Control whether the ViewPager is being displayed.  You can make it not
      * displayed if you are waiting for the initial data to show in it.  During
      * this time an indeterminant progress indicator will be shown instead.
      * <p/>
      * <p>Applications do not normally need to use this themselves.  The default
-     * behavior of ViewPagerFragment is to start with the list not being shown, only
-     * showing it once an adapter is given with {@link #setListAdapter(android.widget.BaseExpandableListAdapter)}.
-     * If the list at that point had not been shown, when it does get shown
+     * behavior of ViewPagerFragment is to start with the ViewPager not being shown, only
+     * showing it once an adapter is given with {@link #setPagerAdapter(PagerAdapter)}.
+     * If the ViewPager at that point had not been shown, when it does get shown
      * it will be do without the user ever seeing the hidden state.
      *
-     * @param shown If true, the list view is shown; if false, the progress
+     * @param shown If true, the ViewPager view is shown; if false, the progress
      *              indicator.  The initial value is true.
      */
-    public void setListShown(boolean shown) {
-        setListShown(shown, true);
+    public void setViewPagerShown(boolean shown) {
+        setViewPagerShown(shown, true);
     }
 
     /**
-     * Like {@link #setListShown(boolean)}, but no animation is used when
+     * Like {@link #setViewPagerShown(boolean)}, but no animation is used when
      * transitioning from the previous state.
      */
-    public void setListShownNoAnimation(boolean shown) {
-        setListShown(shown, false);
+    public void setViewPagerShownNoAnimation(boolean shown) {
+        setViewPagerShown(shown, false);
     }
 
     /**
-     * Control whether the list is being displayed.  You can make it not
+     * Control whether the ViewPager is being displayed.  You can make it not
      * displayed if you are waiting for the initial data to show in it.  During
      * this time an indeterminant progress indicator will be shown instead.
      *
-     * @param shown   If true, the list view is shown; if false, the progress
+     * @param shown   If true, the ViewPager view is shown; if false, the progress
      *                indicator.  The initial value is true.
      * @param animate If true, an animation will be used to transition to the
      *                new state.
      */
-    private void setListShown(boolean shown, boolean animate) {
-        ensureList();
+    private void setViewPagerShown(boolean shown, boolean animate) {
+        ensureViewPager();
         if (mProgressContainer == null) {
             throw new IllegalStateException("Can't be used with a custom content view");
         }
-        if (mListShown == shown) {
+        if (mViewPagerShown == shown) {
             return;
         }
-        mListShown = shown;
+        mViewPagerShown = shown;
         if (shown) {
             if (animate) {
                 mProgressContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-                mListContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                mViewPagerContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
             } else {
                 mProgressContainer.clearAnimation();
-                mListContainer.clearAnimation();
+                mViewPagerContainer.clearAnimation();
             }
             mProgressContainer.setVisibility(View.GONE);
-            mListContainer.setVisibility(View.VISIBLE);
+            mViewPagerContainer.setVisibility(View.VISIBLE);
         } else {
             if (animate) {
                 mProgressContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-                mListContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                mViewPagerContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                                                                                android.R.anim.fade_out));
             } else {
                 mProgressContainer.clearAnimation();
-                mListContainer.clearAnimation();
+                mViewPagerContainer.clearAnimation();
             }
             mProgressContainer.setVisibility(View.VISIBLE);
-            mListContainer.setVisibility(View.GONE);
+            mViewPagerContainer.setVisibility(View.GONE);
         }
     }
 
     /**
-     * Get the BaseExpandableListAdapter associated with this activity's ExpandableListView.
+     * Get the PagerAdapter associated with this activity's ViewPager.
      */
-    public BaseExpandableListAdapter getListAdapter() {
+    public PagerAdapter getPagerAdapter() {
         return mAdapter;
     }
 
-    private void ensureList() {
-        if (mList != null) {
+    private void ensureViewPager() {
+        if (mViewPager != null) {
             return;
         }
         View root = getView();
         if (root == null) {
             throw new IllegalStateException("Content view not yet created");
         }
-        if (root instanceof ExpandableListView) {
-            mList = (ExpandableListView) root;
+        if (root instanceof ViewPager) {
+            mViewPager = (ViewPager) root;
         } else {
             mStandardEmptyView = (TextView) root.findViewById(INTERNAL_EMPTY_ID);
             if (mStandardEmptyView == null) {
@@ -345,33 +291,29 @@ public class ExpandableListFragment extends BaseFragment {
                 mStandardEmptyView.setVisibility(View.GONE);
             }
             mProgressContainer = root.findViewById(INTERNAL_PROGRESS_CONTAINER_ID);
-            mListContainer = root.findViewById(INTERNAL_LIST_CONTAINER_ID);
-            View rawExpandableListView = root.findViewById(android.R.id.list);
-            if (!(rawExpandableListView instanceof ExpandableListView)) {
-                if (rawExpandableListView == null) {
-                    throw new RuntimeException("Your content must have a ExpandableListView whose id attribute is " + "'android.R.id.list'");
+            mViewPagerContainer = root.findViewById(INTERNAL_VIEW_PAGER_CONTAINER_ID);
+            View rawViewPager = root.findViewById(R.id.viewPager);
+            if (!(rawViewPager instanceof ViewPager)) {
+                if (rawViewPager == null) {
+                    throw new RuntimeException("Your content must have a ViewPager whose id attribute is " + "'R.id.viewPager'");
                 }
-                throw new RuntimeException("Content has view with id attribute 'android.R.id.list' " + "that is not a ExpandableListView class");
+                throw new RuntimeException("Content has view with id attribute 'R.id.viewPager' " + "that is not a ViewPager class");
             }
-            mList = (ExpandableListView) rawExpandableListView;
-            if (mEmptyView != null) {
-                mList.setEmptyView(mEmptyView);
-            } else if (mEmptyText != null) {
+            mViewPager = (ViewPager) rawViewPager;
+            if (mEmptyText != null) {
                 mStandardEmptyView.setText(mEmptyText);
-                mList.setEmptyView(mStandardEmptyView);
             }
         }
-        mListShown = true;
-        mList.setOnItemClickListener(mOnClickListener);
+        mViewPagerShown = true;
         if (mAdapter != null) {
-            BaseExpandableListAdapter adapter = mAdapter;
+            PagerAdapter adapter = mAdapter;
             mAdapter = null;
-            setListAdapter(adapter);
+            setPagerAdapter(adapter);
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.
             if (mProgressContainer != null) {
-                setListShown(false, false);
+                setViewPagerShown(false, false);
             }
         }
         mHandler.post(mRequestFocus);

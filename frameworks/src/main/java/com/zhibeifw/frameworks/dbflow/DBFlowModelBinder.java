@@ -12,6 +12,7 @@ import com.raizlabs.android.dbflow.sql.queriable.ModelQueriable;
 import com.raizlabs.android.dbflow.structure.Model;
 import com.zhibeifw.frameworks.app.ListFragment;
 import com.zhibeifw.frameworks.binding.BinderAdapter;
+import com.zhibeifw.frameworks.binding.CollectionAdapter;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class DBFlowModelBinder {
                             public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
                                 List<ModelClass> list = ModelUtils.convertToList(cursor, modelClass);
                                 ListAdapter adapter = listFragment.getListAdapter();
-                                if (adapter == null || !(adapter instanceof BinderAdapter)) {
+                                if (adapter == null || !(adapter instanceof CollectionAdapter)) {
                                     adapter = new BinderAdapter<ModelClass>(fragmentActivity, itemResource, list);
                                     listFragment.setListAdapter(adapter);
                                 } else {

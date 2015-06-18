@@ -81,7 +81,7 @@ public class ListFragment extends BaseFragment {
      * <p>If you are overriding this method with your own custom content,
      * consider including the standard layout {@link android.R.layout#list_content}
      * in your layout file, so that you continue to retain all of the standard
-     * behavior of ListFragment.  In particular, this is currently the only
+     * behavior of ViewPagerFragment.  In particular, this is currently the only
      * way to have the built-in indeterminant progress state be shown.
      */
     @Override
@@ -236,7 +236,7 @@ public class ListFragment extends BaseFragment {
     }
 
     /**
-     * The default content for a ListFragment has a TextView that can
+     * The default content for a ViewPagerFragment has a TextView that can
      * be shown when the list is empty.  If you would like to have it
      * shown, call this method to supply the text it should use.
      */
@@ -258,7 +258,7 @@ public class ListFragment extends BaseFragment {
      * this time an indeterminant progress indicator will be shown instead.
      * <p/>
      * <p>Applications do not normally need to use this themselves.  The default
-     * behavior of ListFragment is to start with the list not being shown, only
+     * behavior of ViewPagerFragment is to start with the list not being shown, only
      * showing it once an adapter is given with {@link #setListAdapter(ListAdapter)}.
      * If the list at that point had not been shown, when it does get shown
      * it will be do without the user ever seeing the hidden state.
@@ -365,7 +365,7 @@ public class ListFragment extends BaseFragment {
         mList.setOnItemClickListener(mOnClickListener);
         if (mAdapter != null) {
             ListAdapter adapter = mAdapter;
-            mAdapter = null;
+            // mAdapter = null;
             setListAdapter(adapter);
         } else {
             // We are starting without an adapter, so assume we won't
