@@ -5,20 +5,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/5 0005.
  */
-public abstract class ArrayObjectFragmentPagerAdapter<T> extends FragmentPagerAdapter {
+public abstract class ArrayFragmentPagerAdapter<T> extends FragmentPagerAdapter {
 
     protected final List<T> data;
 
-    public ArrayObjectFragmentPagerAdapter(FragmentManager fm) {
-        this(fm, null);
+    public ArrayFragmentPagerAdapter(FragmentManager fm) {
+        this(fm, new ArrayList<T>());
     }
 
-    public ArrayObjectFragmentPagerAdapter(FragmentManager fm, List<T> data) {
+    public ArrayFragmentPagerAdapter(FragmentManager fm, T... data) {
+        this(fm, Arrays.asList(data));
+    }
+
+    public ArrayFragmentPagerAdapter(FragmentManager fm, List<T> data) {
         super(fm);
         this.data = data == null ? new ArrayList<T>() : new ArrayList<T>(data);
     }
@@ -81,5 +86,4 @@ public abstract class ArrayObjectFragmentPagerAdapter<T> extends FragmentPagerAd
         data.clear();
         notifyDataSetChanged();
     }
-
 }

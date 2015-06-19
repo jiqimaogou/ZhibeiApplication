@@ -78,8 +78,9 @@ public class ActionBarPullToRefreshListFragment extends PagingListFragment imple
 
     @Override
     public void setListAdapter(ListAdapter adapter) {
-        if (null != mAdapter) {
+        if (mAdapter != null && mDataSetObserver != null) {
             mAdapter.unregisterDataSetObserver(mDataSetObserver);
+            mDataSetObserver = null;
         }
 
         if (adapter != null) {
@@ -91,6 +92,7 @@ public class ActionBarPullToRefreshListFragment extends PagingListFragment imple
     }
 
     private class MyDataSetObserver extends DataSetObserver {
+
         @Override
         public void onChanged() {
             super.onChanged();

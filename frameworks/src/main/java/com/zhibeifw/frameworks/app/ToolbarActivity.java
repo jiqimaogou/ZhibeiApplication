@@ -1,7 +1,7 @@
 package com.zhibeifw.frameworks.app;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
@@ -9,7 +9,7 @@ import com.zhibeifw.frameworks.R;
 
 import butterknife.ButterKnife;
 
-public class ToolbarActivity extends AppCompatActivity {
+public class ToolbarActivity extends ActionBarActivity {
 
     private Toolbar mToolbar;
 
@@ -18,7 +18,6 @@ public class ToolbarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.toolbar_activity);
         initToolbarLayout();
     }
 
@@ -31,7 +30,7 @@ public class ToolbarActivity extends AppCompatActivity {
     private void initToolbarLayout() {
         super.setContentView(R.layout.toolbar_activity);
         mToolbar = ButterKnife.findById(this, R.id.toolbar);
-        mToolbarContent = ButterKnife.findById(this, R.id.toolbarContent);
+        mToolbarContent = ButterKnife.findById(this, getContentId());
         initToolBar();
     }
 
@@ -42,4 +41,9 @@ public class ToolbarActivity extends AppCompatActivity {
     public Toolbar getToolbar() {
         return mToolbar;
     }
+
+    public int getContentId() {
+        return R.id.toolbarContent;
+    }
+
 }
