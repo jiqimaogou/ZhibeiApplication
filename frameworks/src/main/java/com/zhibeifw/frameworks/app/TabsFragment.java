@@ -8,13 +8,16 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+
+import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2015/6/18 0018.
  */
-public abstract class TabsFragment extends Fragment {
+public abstract class TabsFragment extends BaseFragment {
 
     private FragmentTabHost mTabHost;
 
@@ -27,14 +30,34 @@ public abstract class TabsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mTabHost.setup(getActivity(), getChildFragmentManager(), getContainerId());
+        getTabHost().setup(getActivity(), getChildFragmentManager(), getContainerId());
+        setCustomTabLayoutIfNecessary();
         addTab(getTabHost());
+    }
+
+    private void setCustomTabLayoutIfNecessary() {
+        int tabLayoutId = getTabLayoutId();
+        if (tabLayoutId > 0) {
+            try {
+                Field tabLayoutIdField = TabHost.class.getDeclaredField("mTabLayoutId");
+                tabLayoutIdField.setAccessible(true);
+                tabLayoutIdField.set(mTabHost, tabLayoutId);
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     protected abstract void addTab(FragmentTabHost tabHost);
 
     public int getContainerId() {
         return android.R.id.tabcontent;
+    }
+
+    public int getTabLayoutId() {
+        return 0;
     }
 
     @Override

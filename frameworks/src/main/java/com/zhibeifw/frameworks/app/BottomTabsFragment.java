@@ -16,4 +16,9 @@ public abstract class BottomTabsFragment extends TabsFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.bottom_tabs, container, false);
     }
+
+    @Override
+    public int getContainerId() {
+        return R.id.realtabcontent;
+    }
 }

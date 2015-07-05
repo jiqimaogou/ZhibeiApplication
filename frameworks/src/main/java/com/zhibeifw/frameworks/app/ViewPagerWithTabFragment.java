@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
  */
 public class ViewPagerWithTabFragment extends ViewPagerFragment {
 
+    private TabLayout mTabLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.view_pager_with_tab_layout, container, false);
@@ -24,7 +26,20 @@ public class ViewPagerWithTabFragment extends ViewPagerFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TabLayout tabLayout = ButterKnife.findById(view, R.id.tabbar);
-        tabLayout.setupWithViewPager(getViewPager());
+        getmTabLayout().setupWithViewPager(getViewPager());
+    }
+
+    public TabLayout getmTabLayout() {
+        if (mTabLayout == null) {
+            mTabLayout = ButterKnife.findById(getView(), R.id.tabLayout);
+        }
+
+        return mTabLayout;
+    }
+
+    @Override
+    public void onDestroyView() {
+        mTabLayout = null;
+        super.onDestroyView();
     }
 }

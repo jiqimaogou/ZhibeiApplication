@@ -1,4 +1,4 @@
-package com.zhibeifw.frameworks.module;
+package com.zhibeifw.frameworks.dagger;
 
 import android.app.Application;
 
@@ -9,9 +9,10 @@ import dagger.Provides;
 
 @Module
 public class ApplicationModule {
+
     Application mApplication;
 
-    ApplicationModule(Application application) {
+    public ApplicationModule(Application application) {
         mApplication = application;
     }
 
