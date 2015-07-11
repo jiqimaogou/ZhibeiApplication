@@ -3,6 +3,7 @@
     <string name="app_name">Zhibeifw Frameworks</string>
     <string name="package_name">com.zhibeifw.frameworks</string>
     <string name="login_fragment_name">android.support.v4.app.Fragment</string>
+    <string name="confirm_credentials_fragment_name">android.support.v4.app.Fragment</string>
     <string name="sending_request">正在发送请求</string>
     <string name="request_send_ok">请求发送成功！</string>
     <string name="request_send_failed">请求发送失败！</string>

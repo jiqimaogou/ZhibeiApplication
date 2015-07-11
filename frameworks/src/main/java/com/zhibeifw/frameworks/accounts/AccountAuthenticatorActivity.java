@@ -57,20 +57,23 @@ public class AccountAuthenticatorActivity extends AccountAuthenticatorBaseActivi
 
     @Override
     public String getFname() {
-        return getString(R.string.login_fragment_name);
+        if (requestNewAccount) {
+            return getString(R.string.login_fragment_name);
+        }
+        return getString(R.string.confirm_credentials_fragment_name);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        accountManager = AccountManager.get(this);
-
         final Intent intent = getIntent();
         username = intent.getStringExtra(PARAM_USERNAME);
         authTokenType = intent.getStringExtra(PARAM_AUTHTOKEN_TYPE);
         requestNewAccount = username == null;
         confirmCredentials = intent.getBooleanExtra(PARAM_CONFIRMCREDENTIALS, false);
+
+        super.onCreate(savedInstanceState);
+
+        accountManager = AccountManager.get(this);
     }
 
     @Override

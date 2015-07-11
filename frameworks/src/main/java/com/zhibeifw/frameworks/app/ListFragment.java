@@ -40,6 +40,7 @@ import android.widget.TextView;
  * documentation for a class overview.
  */
 public class ListFragment extends BaseFragment {
+
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
     static final int INTERNAL_PROGRESS_CONTAINER_ID = 0x00ff0002;
     static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
@@ -365,7 +366,7 @@ public class ListFragment extends BaseFragment {
         mList.setOnItemClickListener(mOnClickListener);
         if (mAdapter != null) {
             ListAdapter adapter = mAdapter;
-            // mAdapter = null;
+            mAdapter = null;
             setListAdapter(adapter);
         } else {
             // We are starting without an adapter, so assume we won't

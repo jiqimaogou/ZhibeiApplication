@@ -49,6 +49,7 @@ import java.util.List;
  * override {@link #getView(int, View, ViewGroup)} to return the type of view you want.
  */
 public class BinderAdapter<T> extends BaseAdapter implements Filterable, CollectionAdapter<T> {
+
     /**
      * Contains the list of objects that represent the data of this BinderAdapter.
      * The content of this list is referred to as "the array" in the documentation.
@@ -90,6 +91,8 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
 
     private LayoutInflater mInflater;
 
+    private int mVariableId;
+
     /**
      * Constructor
      *
@@ -97,8 +100,8 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
      * @param resource The resource ID for a layout file containing a TextView to use when
      *                 instantiating views.
      */
-    public BinderAdapter(Context context, int resource) {
-        init(context, resource, new ArrayList<T>());
+    public BinderAdapter(Context context, int resource, int variableId) {
+        init(context, resource, variableId, new ArrayList<T>());
     }
 
     /**
@@ -109,8 +112,8 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public BinderAdapter(Context context, int resource, T[] objects) {
-        init(context, resource, Arrays.asList(objects));
+    public BinderAdapter(Context context, int resource, int variableId, T[] objects) {
+        init(context, resource, variableId, Arrays.asList(objects));
     }
 
     /**
@@ -121,8 +124,8 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public BinderAdapter(Context context, int resource, List<T> objects) {
-        init(context, resource, objects);
+    public BinderAdapter(Context context, int resource, int variableId, List<T> objects) {
+        init(context, resource, variableId, objects);
     }
 
     /**
@@ -292,10 +295,11 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
         mNotifyOnChange = notifyOnChange;
     }
 
-    private void init(Context context, int resource, List<T> objects) {
+    private void init(Context context, int resource, int variableId, List<T> objects) {
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mResource = mDropDownResource = resource;
+        mVariableId = variableId;
         mObjects = objects;
     }
 
@@ -360,9 +364,13 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
             binding = DataBindingUtil.getBinding(view);
         }
 
-        binding.setVariable(1, item);
+        binding.setVariable(getVariableId(), item);
         binding.executePendingBindings();
         return view;
+    }
+
+    public int getVariableId() {
+        return mVariableId;
     }
 
     /**
@@ -392,10 +400,10 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
      * @param textViewResId  The identifier of the layout used to create views.
      * @return An BinderAdapter<CharSequence>.
      */
-    public static CollectionAdapter<CharSequence> createFromResource(Context context, int textArrayResId,
-            int textViewResId) {
+    public static CollectionAdapter<CharSequence> createFromResource(Context context, int variableId,
+            int textArrayResId, int textViewResId) {
         CharSequence[] strings = context.getResources().getTextArray(textArrayResId);
-        return new BinderAdapter<CharSequence>(context, textViewResId, strings);
+        return new BinderAdapter<CharSequence>(context, textViewResId, variableId, strings);
     }
 
     /**
@@ -414,6 +422,7 @@ public class BinderAdapter<T> extends BaseAdapter implements Filterable, Collect
      * is removed from the list.</p>
      */
     private class ArrayFilter extends Filter {
+
         @Override
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();

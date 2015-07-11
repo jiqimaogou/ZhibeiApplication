@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Administrator on 2015/5/30 0030.
  */
 public class ModelUtils {
+
     public static <ModelClass extends Model> ModelClass convertToModel(Cursor cursor, Class<ModelClass> modelClass) {
         ModelClass retModel = null;
         if (BaseCacheableModel.class.isAssignableFrom(modelClass)) {
@@ -28,8 +29,8 @@ public class ModelUtils {
             Class<ModelClass> modelClass) {
         List<ModelClass> list = null;
         if (BaseCacheableModel.class.isAssignableFrom(modelClass)) {
-            /*list = (List<ModelClass>) SqlUtils.convertToCacheableList((Class<? extends BaseCacheableModel>) modelClass,
-                                                                      cursor);*/
+            list = (List<ModelClass>) SqlUtils.convertToCacheableList((Class<? extends BaseCacheableModel>) modelClass,
+                                                                      cursor);
         } else {
             list = SqlUtils.convertToList(modelClass, cursor);
         }

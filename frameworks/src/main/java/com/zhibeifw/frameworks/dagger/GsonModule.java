@@ -1,5 +1,6 @@
 package com.zhibeifw.frameworks.dagger;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,7 +18,6 @@ public class GsonModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return gson;
+        return Converters.registerDateTime(new GsonBuilder().excludeFieldsWithoutExposeAnnotation()).create();
     }
 }

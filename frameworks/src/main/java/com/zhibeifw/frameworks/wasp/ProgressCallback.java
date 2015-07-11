@@ -11,7 +11,7 @@ import com.zhibeifw.frameworks.R;
 /**
  * Created by Administrator on 2015/6/29 0029.
  */
-public class ProgressCallback<T> implements CallBack<T> {
+public class ProgressCallback<T> extends CallBackDecorator<T> {
 
     private ProgressDialog mProgressDialog;
 
@@ -20,19 +20,27 @@ public class ProgressCallback<T> implements CallBack<T> {
     @Override
     public void onStart(Request<T> request) {
         showDialog();
-    }
-
-    @Override
-    public void onSuccess(T t) {
-        hideDialog();
+        super.onStart(request);
     }
 
     @Override
     public void onError(WaspError error) {
         hideDialog();
+        super.onError(error);
+    }
+
+    @Override
+    public void onSuccess(T t) {
+        hideDialog();
+        super.onSuccess(t);
     }
 
     public ProgressCallback(Context context) {
+        this.mContext = context;
+    }
+
+    public ProgressCallback(CallBack<T> callBack, Context context) {
+        super(callBack);
         this.mContext = context;
     }
 

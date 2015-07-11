@@ -40,7 +40,7 @@ dependencies {
     compile 'com.bluelinelabs:logansquare:1.0.6'
     apt 'com.google.dagger:dagger-compiler:2.+'
     compile 'io.reactivex:rxandroid:0.24.0'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
+//    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
     compile 'com.melnykov:floatingactionbutton:1.2.0'
     compile 'com.github.nicolasjafelle:paginglistview:1.2'
     compile 'com.pnikosis:materialish-progress:1.5'
@@ -59,6 +59,10 @@ dependencies {
     compile 'com.android.support:design:22.2.0'
     compile 'com.andreabaccega:android-form-edittext:1.1.0@aar'
     compile 'com.github.androidprogresslayout:library:2.0.2@aar'
+    compile 'joda-time:joda-time:2.8.1'
+    compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.1.0'
+    compile 'com.makeramen:roundedimageview:2.1.0'
+    compile 'com.github.chrisbanes.pulltorefresh:library:2.1.2-SNAPSHOT@aar'
 }
 /* 
 bintray {
