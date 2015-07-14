@@ -53,7 +53,7 @@ import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
@@ -68,7 +68,7 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
 import com.easemob.chatuidemo.Constant;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.activity.AlertDialog;
 import com.easemob.chatuidemo.activity.BaiduMapActivity;
@@ -249,7 +249,7 @@ public class MessageAdapter extends BaseAdapter{
 			    return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
 			else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
 			    return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
-			else if(((DemoHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
+			else if(((HXSDKHelper)AbsHXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROBOT_MENU : MESSAGE_TYPE_SENT_ROBOT_MENU;
 			else
 				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
@@ -303,7 +303,7 @@ public class MessageAdapter extends BaseAdapter{
 				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_video_call,
 						null) : inflater.inflate(R.layout.row_sent_video_call, null);
 			// 含有菜单的消息	
-			else if (((DemoHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
+			else if (((HXSDKHelper)AbsHXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_menu, null)
 						: inflater.inflate(R.layout.row_sent_message, null);
 			else
@@ -470,7 +470,7 @@ public class MessageAdapter extends BaseAdapter{
 			        || message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
 			    // 音视频通话
 			    handleCallMessage(message, holder, position);
-			else if(((DemoHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
+			else if(((HXSDKHelper)AbsHXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				//含有列表的消息
 				handleRobotMenuMessage(message, holder, position);
 			else

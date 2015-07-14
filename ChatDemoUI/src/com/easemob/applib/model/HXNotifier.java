@@ -29,7 +29,7 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.util.EMLog;
@@ -291,7 +291,7 @@ public class HXNotifier {
             } 
         }
         
-        HXSDKModel model = HXSDKHelper.getInstance().getModel();
+        HXSDKModel model = AbsHXSDKHelper.getInstance().getModel();
         if(!model.getSettingMsgNotification()){
             return;
         }

@@ -70,7 +70,7 @@ import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.applib.model.GroupRemoveListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
@@ -88,7 +88,7 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
 import com.easemob.chatuidemo.HXApplication;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.adapter.ExpressionAdapter;
 import com.easemob.chatuidemo.adapter.ExpressionPagerAdapter;
@@ -380,7 +380,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 
 		if (chatType == CHATTYPE_SINGLE) { // 单聊
 			toChatUsername = getIntent().getStringExtra("userId");
-			Map<String,RobotUser> robotMap=((DemoHXSDKHelper)HXSDKHelper.getInstance()).getRobotList();
+			Map<String,RobotUser> robotMap=((HXSDKHelper)AbsHXSDKHelper.getInstance()).getRobotList();
 			if(robotMap!=null&&robotMap.containsKey(toChatUsername)){
 				isRobot = true;
 				String nick = robotMap.get(toChatUsername).getNick();
@@ -786,10 +786,10 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
             if(username.equals(getToChatUsername())){
                 refreshUIWithNewMessage();
                 //声音和震动提示有新消息
-                HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(message);
+                AbsHXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(message);
             }else{
                 //如果消息不是和当前聊天ID的消息
-                HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+                AbsHXSDKHelper.getInstance().getNotifier().onNewMsg(message);
             }
 
             break;
@@ -1483,7 +1483,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		     adapter.refresh();
 	     }
 
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
+		HXSDKHelper sdkHelper = (HXSDKHelper) HXSDKHelper.getInstance();
 		sdkHelper.pushActivity(this);
 		// register the event listener when enter the foreground
 		EMChatManager.getInstance().registerEventListener(
@@ -1498,7 +1498,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		// background
 		EMChatManager.getInstance().unregisterEventListener(this);
 
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
+		HXSDKHelper sdkHelper = (HXSDKHelper) HXSDKHelper.getInstance();
 
 		// 把此activity 从foreground activity 列表里移除
 		sdkHelper.popActivity(this);

@@ -37,7 +37,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMVideoCallHelper;
@@ -86,7 +86,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         }
         setContentView(R.layout.activity_video_call);
         
-        HXSDKHelper.getInstance().isVideoCalling = true;
+        AbsHXSDKHelper.getInstance().isVideoCalling = true;
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
@@ -466,7 +466,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HXSDKHelper.getInstance().isVideoCalling = false;
+        AbsHXSDKHelper.getInstance().isVideoCalling = false;
         try {
 			callHelper.setSurfaceView(null);
 			cameraHelper.stopCapture();

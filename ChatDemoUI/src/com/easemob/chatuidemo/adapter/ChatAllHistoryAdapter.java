@@ -32,7 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
 import com.easemob.chat.EMConversation;
@@ -43,7 +43,7 @@ import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.EMConversation.EMConversationType;
 import com.easemob.chatuidemo.Constant;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.domain.RobotUser;
 import com.easemob.chatuidemo.utils.DateUtils;
@@ -116,7 +116,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			} else if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
 				holder.name.setText("申请与通知");
 			}
-			Map<String,RobotUser> robotMap=((DemoHXSDKHelper)HXSDKHelper.getInstance()).getRobotList();
+			Map<String,RobotUser> robotMap=((HXSDKHelper)AbsHXSDKHelper.getInstance()).getRobotList();
 			if(robotMap!=null&&robotMap.containsKey(username)){
 				String nick = robotMap.get(username).getNick();
 				if(!TextUtils.isEmpty(nick)){
@@ -190,8 +190,8 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			break;
 		case TXT: // 文本消息
 			
-			if(((DemoHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message)){
-				digest = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getRobotMenuMessageDigest(message);
+			if(((HXSDKHelper)AbsHXSDKHelper.getInstance()).isRobotMenuMessage(message)){
+				digest = ((HXSDKHelper)AbsHXSDKHelper.getInstance()).getRobotMenuMessageDigest(message);
 			}else if(message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL,false)){
 				TextMessageBody txtBody = (TextMessageBody) message.getBody();
 				digest = getStrng(context, R.string.voice_call) + txtBody.getMessage();

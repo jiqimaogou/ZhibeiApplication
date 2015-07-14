@@ -42,11 +42,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.easemob.EMValueCallBack;
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chatuidemo.HXApplication;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.db.UserDao;
 import com.easemob.chatuidemo.domain.RobotUser;
@@ -80,7 +80,7 @@ public class RobotsActivity extends BaseActivity {
 				getRobotNamesFromServer();
 			}
 		});
-		Map<String, RobotUser> robotMap = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getRobotList();
+		Map<String, RobotUser> robotMap = ((HXSDKHelper) AbsHXSDKHelper.getInstance()).getRobotList();
 		if (robotMap != null) {
 			robotList.addAll(robotMap.values());
 		} else {
@@ -136,7 +136,7 @@ public class RobotsActivity extends BaseActivity {
 						robotList.clear();
 						robotList.addAll(mMap.values());
 						// 存入内存
-						((DemoHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);
+						((HXSDKHelper) AbsHXSDKHelper.getInstance()).setRobotList(mMap);
 						// 存入db
 						UserDao dao = new UserDao(RobotsActivity.this);
 						dao.saveRobotUser(robotList);

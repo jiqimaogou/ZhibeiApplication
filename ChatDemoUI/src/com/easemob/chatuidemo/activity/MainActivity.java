@@ -44,7 +44,7 @@ import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactListener;
@@ -59,7 +59,7 @@ import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chatuidemo.Constant;
 import com.easemob.chatuidemo.HXApplication;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.db.InviteMessgeDao;
 import com.easemob.chatuidemo.db.UserDao;
@@ -172,20 +172,20 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 	
 	static void asyncFetchGroupsFromServer(){
-	    HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack(){
+	    AbsHXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack(){
 
             @Override
             public void onSuccess() {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+                AbsHXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
                 
-                if(HXSDKHelper.getInstance().isContactsSyncedWithServer()){
-                    HXSDKHelper.getInstance().notifyForRecevingEvents();
+                if(AbsHXSDKHelper.getInstance().isContactsSyncedWithServer()){
+                    AbsHXSDKHelper.getInstance().notifyForRecevingEvents();
                 }
             }
 
             @Override
             public void onError(int code, String message) {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);                
+                AbsHXSDKHelper.getInstance().noitifyGroupSyncListeners(false);                
             }
 
             @Override
@@ -197,11 +197,11 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	}
 	
 	static void asyncFetchContactsFromServer(){
-	    HXSDKHelper.getInstance().asyncFetchContactsFromServer(new EMValueCallBack<List<String>>(){
+	    AbsHXSDKHelper.getInstance().asyncFetchContactsFromServer(new EMValueCallBack<List<String>>(){
 
             @Override
             public void onSuccess(List<String> usernames) {
-                Context context = HXSDKHelper.getInstance().getAppContext();
+                Context context = AbsHXSDKHelper.getInstance().getAppContext();
                 
                 System.out.println("----------------"+usernames.toString());
                 EMLog.d("roster", "contacts size: " + usernames.size());
@@ -250,34 +250,34 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                 List<User> users = new ArrayList<User>(userlist.values());
                 dao.saveContactList(users);
 
-                HXSDKHelper.getInstance().notifyContactsSyncListener(true);
+                AbsHXSDKHelper.getInstance().notifyContactsSyncListener(true);
                 
-                if(HXSDKHelper.getInstance().isGroupsSyncedWithServer()){
-                    HXSDKHelper.getInstance().notifyForRecevingEvents();
+                if(AbsHXSDKHelper.getInstance().isGroupsSyncedWithServer()){
+                    AbsHXSDKHelper.getInstance().notifyForRecevingEvents();
                 }
                 
             }
 
             @Override
             public void onError(int error, String errorMsg) {
-                HXSDKHelper.getInstance().notifyContactsSyncListener(false);
+                AbsHXSDKHelper.getInstance().notifyContactsSyncListener(false);
             }
 	        
 	    });
 	}
 	
 	static void asyncFetchBlackListFromServer(){
-	    HXSDKHelper.getInstance().asyncFetchBlackListFromServer(new EMValueCallBack<List<String>>(){
+	    AbsHXSDKHelper.getInstance().asyncFetchBlackListFromServer(new EMValueCallBack<List<String>>(){
 
             @Override
             public void onSuccess(List<String> value) {
                 EMContactManager.getInstance().saveBlackList(value);
-                HXSDKHelper.getInstance().notifyBlackListSyncListener(true);
+                AbsHXSDKHelper.getInstance().notifyBlackListSyncListener(true);
             }
 
             @Override
             public void onError(int error, String errorMsg) {
-                HXSDKHelper.getInstance().notifyBlackListSyncListener(false);
+                AbsHXSDKHelper.getInstance().notifyBlackListSyncListener(false);
             }
 	        
 	    });
@@ -365,7 +365,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			EMMessage message = (EMMessage) event.getData();
 
 			// 提示新消息
-			HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+			AbsHXSDKHelper.getInstance().getNotifier().onNewMsg(message);
 
 			refreshUI();
 			break;
@@ -604,15 +604,15 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		@Override
 		public void onConnected() {
-            boolean groupSynced = HXSDKHelper.getInstance().isGroupsSyncedWithServer();
-            boolean contactSynced = HXSDKHelper.getInstance().isContactsSyncedWithServer();
+            boolean groupSynced = AbsHXSDKHelper.getInstance().isGroupsSyncedWithServer();
+            boolean contactSynced = AbsHXSDKHelper.getInstance().isContactsSyncedWithServer();
             
             // in case group and contact were already synced, we supposed to notify sdk we are ready to receive the events
             if(groupSynced && contactSynced){
                 new Thread(){
                     @Override
                     public void run(){
-                        HXSDKHelper.getInstance().notifyForRecevingEvents();
+                        AbsHXSDKHelper.getInstance().notifyForRecevingEvents();
                     }
                 }.start();
             }else{
@@ -624,7 +624,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                     asyncFetchContactsFromServer();
                 }
                 
-                if(!HXSDKHelper.getInstance().isBlackListSyncedWithServer()){
+                if(!AbsHXSDKHelper.getInstance().isBlackListSyncedWithServer()){
                     asyncFetchBlackListFromServer();
                 }
             }
@@ -696,7 +696,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			// 保存邀请消息
 			EMChatManager.getInstance().saveMessage(msg);
 			// 提醒新消息
-			HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
+			AbsHXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
 
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -791,7 +791,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			// 保存同意消息
 			EMChatManager.getInstance().saveMessage(msg);
 			// 提醒新消息
-			HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
+			AbsHXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
 
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -820,7 +820,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	private void notifyNewIviteMessage(InviteMessage msg) {
 		saveInviteMsg(msg);
 		// 提示有新消息
-		HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(null);
+		AbsHXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(null);
 
 		// 刷新bottom bar消息未读数
 		updateUnreadAddressLable();
@@ -884,7 +884,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		// unregister this event listener when this activity enters the
 		// background
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
+		HXSDKHelper sdkHelper = (HXSDKHelper) HXSDKHelper.getInstance();
 		sdkHelper.pushActivity(this);
 
 		// register the event listener when enter the foreground
@@ -895,7 +895,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	@Override
 	protected void onStop() {
 		EMChatManager.getInstance().unregisterEventListener(this);
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
+		HXSDKHelper sdkHelper = (HXSDKHelper) HXSDKHelper.getInstance();
 		sdkHelper.popActivity(this);
 
 		super.onStop();

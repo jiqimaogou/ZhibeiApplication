@@ -18,7 +18,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.applib.model.HXNotifier;
 import com.umeng.analytics.MobclickAgent;
 
@@ -33,7 +33,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         // onresume时，取消notification显示
-        HXSDKHelper.getInstance().getNotifier().reset();
+        AbsHXSDKHelper.getInstance().getNotifier().reset();
         
         // umeng
         MobclickAgent.onResume(this);

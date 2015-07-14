@@ -29,13 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.EMCallBack;
-import com.easemob.applib.controller.HXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper;
 import com.easemob.applib.model.HXSDKModel;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 import com.easemob.chatuidemo.Constant;
 import com.easemob.chatuidemo.HXApplication;
-import com.easemob.chatuidemo.DemoHXSDKHelper;
+import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.DemoHXSDKModel;
 import com.easemob.chatuidemo.R;
 
@@ -179,7 +179,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		
 		chatOptions = EMChatManager.getInstance().getChatOptions();
 		
-		model = (DemoHXSDKModel) HXSDKHelper.getInstance().getModel();
+		model = (DemoHXSDKModel) AbsHXSDKHelper.getInstance().getModel();
 		
 		// 震动和声音总开关，来消息时，是否允许此开关打开
 		// the vibrate and sound notification are allowed or not?
@@ -246,7 +246,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				chatOptions.setNotificationEnable(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
 
-				HXSDKHelper.getInstance().getModel().setSettingMsgNotification(false);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgNotification(false);
 			} else {
 				iv_switch_open_notification.setVisibility(View.VISIBLE);
 				iv_switch_close_notification.setVisibility(View.INVISIBLE);
@@ -256,7 +256,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				textview2.setVisibility(View.VISIBLE);
 				chatOptions.setNotificationEnable(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgNotification(true);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgNotification(true);
 			}
         } else if (id == R.id.rl_switch_sound) {
             if (iv_switch_open_sound.getVisibility() == View.VISIBLE) {
@@ -264,13 +264,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_sound.setVisibility(View.VISIBLE);
 				chatOptions.setNoticeBySound(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgSound(false);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgSound(false);
 			} else {
 				iv_switch_open_sound.setVisibility(View.VISIBLE);
 				iv_switch_close_sound.setVisibility(View.INVISIBLE);
 				chatOptions.setNoticeBySound(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
 			}
         } else if (id == R.id.rl_switch_vibrate) {
             if (iv_switch_open_vibrate.getVisibility() == View.VISIBLE) {
@@ -278,13 +278,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_vibrate.setVisibility(View.VISIBLE);
 				chatOptions.setNoticedByVibrate(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(false);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgVibrate(false);
 			} else {
 				iv_switch_open_vibrate.setVisibility(View.VISIBLE);
 				iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
 				chatOptions.setNoticedByVibrate(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
 			}
         } else if (id == R.id.rl_switch_speaker) {
             if (iv_switch_open_speaker.getVisibility() == View.VISIBLE) {
@@ -292,13 +292,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_speaker.setVisibility(View.VISIBLE);
 				chatOptions.setUseSpeaker(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgSpeaker(false);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgSpeaker(false);
 			} else {
 				iv_switch_open_speaker.setVisibility(View.VISIBLE);
 				iv_switch_close_speaker.setVisibility(View.INVISIBLE);
 				chatOptions.setUseSpeaker(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
+				AbsHXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
 			}
         } else if (id == R.id.rl_switch_chatroom_owner_leave) {
             if(this.iv_switch_room_owner_leave_allow.getVisibility() == View.VISIBLE){

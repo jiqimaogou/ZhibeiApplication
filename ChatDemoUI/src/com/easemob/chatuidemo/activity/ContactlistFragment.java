@@ -49,8 +49,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.easemob.applib.controller.HXSDKHelper;
-import com.easemob.applib.controller.HXSDKHelper.HXSyncListener;
+import com.easemob.applib.controller.AbsHXSDKHelper;
+import com.easemob.applib.controller.AbsHXSDKHelper.HXSyncListener;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chatuidemo.Constant;
 import com.easemob.chatuidemo.HXApplication;
@@ -85,7 +85,7 @@ public class ContactlistFragment extends Fragment {
     private User toBeProcessUser;
     private String toBeProcessUsername;
 
-	class HXContactSyncListener implements HXSDKHelper.HXSyncListener {
+	class HXContactSyncListener implements AbsHXSDKHelper.HXSyncListener {
 		@Override
 		public void onSyncSucess(final boolean success) {
 			EMLog.d(TAG, "on contact list sync success:" + success);
@@ -235,12 +235,12 @@ public class ContactlistFragment extends Fragment {
 		progressBar = (View) getView().findViewById(R.id.progress_bar);
 
 		contactSyncListener = new HXContactSyncListener();
-		HXSDKHelper.getInstance().addSyncContactListener(contactSyncListener);
+		AbsHXSDKHelper.getInstance().addSyncContactListener(contactSyncListener);
 		
 		blackListSyncListener = new HXBlackListSyncListener();
-		HXSDKHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
+		AbsHXSDKHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
 		
-		if (!HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+		if (!AbsHXSDKHelper.getInstance().isContactsSyncedWithServer()) {
 			progressBar.setVisibility(View.VISIBLE);
 		} else {
 			progressBar.setVisibility(View.GONE);
@@ -392,12 +392,12 @@ public class ContactlistFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		if (contactSyncListener != null) {
-			HXSDKHelper.getInstance().removeSyncContactListener(contactSyncListener);
+			AbsHXSDKHelper.getInstance().removeSyncContactListener(contactSyncListener);
 			contactSyncListener = null;
 		}
 		
 		if(blackListSyncListener != null){
-		    HXSDKHelper.getInstance().removeSyncBlackListListener(blackListSyncListener);
+		    AbsHXSDKHelper.getInstance().removeSyncBlackListListener(blackListSyncListener);
 		}
 		
 		super.onDestroy();
