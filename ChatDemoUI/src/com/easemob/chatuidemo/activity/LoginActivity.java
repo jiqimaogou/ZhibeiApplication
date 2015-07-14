@@ -35,7 +35,7 @@ import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chatuidemo.Constant;
-import com.easemob.chatuidemo.DemoApplication;
+import com.easemob.chatuidemo.HXApplication;
 import com.easemob.chatuidemo.DemoHXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.db.UserDao;
@@ -91,8 +91,8 @@ public class LoginActivity extends BaseActivity {
 
 			}
 		});
-		if (DemoApplication.getInstance().getUserName() != null) {
-			usernameEditText.setText(DemoApplication.getInstance().getUserName());
+		if (HXApplication.getInstance().getUserName() != null) {
+			usernameEditText.setText(HXApplication.getInstance().getUserName());
 		}
 	}
 
@@ -141,8 +141,8 @@ public class LoginActivity extends BaseActivity {
 					return;
 				}
 				// 登陆成功，保存用户名密码
-				DemoApplication.getInstance().setUserName(currentUsername);
-				DemoApplication.getInstance().setPassword(currentPassword);
+				HXApplication.getInstance().setUserName(currentUsername);
+				HXApplication.getInstance().setPassword(currentPassword);
 
 				try {
 					// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
@@ -157,7 +157,7 @@ public class LoginActivity extends BaseActivity {
 					runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							DemoApplication.getInstance().logout(null);
+							HXApplication.getInstance().logout(null);
 							Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
 						}
 					});
@@ -165,7 +165,7 @@ public class LoginActivity extends BaseActivity {
 				}
 				// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
 				boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
-						DemoApplication.currentUserNick.trim());
+						HXApplication.currentUserNick.trim());
 				if (!updatenick) {
 					Log.e("LoginActivity", "update current user nick fail");
 				}
@@ -227,7 +227,7 @@ public class LoginActivity extends BaseActivity {
 		userlist.put(Constant.CHAT_ROBOT, robotUser);
 		
 		// 存入内存
-		DemoApplication.getInstance().setContactList(userlist);
+		HXApplication.getInstance().setContactList(userlist);
 		// 存入db
 		UserDao dao = new UserDao(LoginActivity.this);
 		List<User> users = new ArrayList<User>(userlist.values());
