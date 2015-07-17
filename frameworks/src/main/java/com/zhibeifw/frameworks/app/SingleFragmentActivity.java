@@ -1,5 +1,6 @@
 package com.zhibeifw.frameworks.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -57,5 +58,11 @@ public class SingleFragmentActivity extends BaseActivity implements FragmentStac
         if (!getStack().pop(true)) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        Fragment fragment = mStack.peek();
+        fragment.startActivityForResult(intent, requestCode);
     }
 }

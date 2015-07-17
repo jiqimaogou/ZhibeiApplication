@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ChatDemoUI/ChatDemoUI.iml" filepath="$PROJECT_DIR$/ChatDemoUI/ChatDemoUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZhibeiApplication.iml" filepath="$PROJECT_DIR$/ZhibeiApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/frameworks/frameworks.iml" filepath="$PROJECT_DIR$/frameworks/frameworks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wasp/wasp.iml" filepath="$PROJECT_DIR$/wasp/wasp.iml" />
     </modules>
   </component>
 </project>

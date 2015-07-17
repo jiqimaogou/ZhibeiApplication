@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
 import com.zhibeifw.frameworks.dbflow.Model;
 import com.zhibeifw.zhibeiapplication.model.AppDatabase;
 
@@ -15,7 +15,8 @@ import com.zhibeifw.zhibeiapplication.model.AppDatabase;
  * Created by Administrator on 2015/5/30 0030.
  */
 @Table(databaseName = AppDatabase.NAME)
-public class OnlineRoom extends BaseModel implements Parcelable, Model {
+public class OnlineRoom extends BaseCacheableModel implements Parcelable, Model {
+
     @Column
     @PrimaryKey
     @Expose

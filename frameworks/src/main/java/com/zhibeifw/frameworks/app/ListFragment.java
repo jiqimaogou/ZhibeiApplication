@@ -183,6 +183,12 @@ public class ListFragment extends BaseFragment {
      * @param id       The row id of the item that was clicked
      */
     public void onListItemClick(ListView l, View v, int position, long id) {
+        Object item = l.getAdapter().getItem(position);
+        if (item != null)
+            onListItemClick(item);
+    }
+
+    public void onListItemClick(Object item) {
     }
 
     /**

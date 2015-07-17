@@ -1,13 +1,12 @@
 package com.zhibeifw.frameworks;
 
-import android.app.Application;
-
+import com.easemob.chatuidemo.HXApplication;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 /**
  * Created by Administrator on 2015/6/19 0019.
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends HXApplication {
 
     private static BaseApplication sInstance;
 

@@ -45,10 +45,7 @@ public class ProgressCallback<T> extends CallBackDecorator<T> {
     }
 
     protected void showDialog() {
-        if (mProgressDialog == null) {
-            setProgressDialog();
-        }
-        mProgressDialog.show();
+        getProgressDialog().show();
     }
 
     protected void hideDialog() {
@@ -57,7 +54,14 @@ public class ProgressCallback<T> extends CallBackDecorator<T> {
         }
     }
 
-    private void setProgressDialog() {
+    public ProgressDialog getProgressDialog() {
+        if (mProgressDialog == null) {
+            setProgressDialog();
+        }
+        return mProgressDialog;
+    }
+
+    protected void setProgressDialog() {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setTitle(mContext.getString(R.string.sending_request));
         mProgressDialog.setMessage(mContext.getString(R.string.sending_request));

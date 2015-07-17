@@ -1,1 +1,1 @@
-include ':app', ':frameworks'
+include ':app', ':frameworks', ':wasp', ':ChatDemoUI'

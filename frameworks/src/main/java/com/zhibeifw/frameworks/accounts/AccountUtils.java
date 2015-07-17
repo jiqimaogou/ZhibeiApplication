@@ -173,7 +173,7 @@ public class AccountUtils {
             }
         } catch (OperationCanceledException e) {
             Log.d(TAG, "Excepting retrieving account", e);
-            activity.finish();
+            // activity.finish();
             throw e;
         } catch (AccountsException e) {
             Log.d(TAG, "Excepting retrieving account", e);

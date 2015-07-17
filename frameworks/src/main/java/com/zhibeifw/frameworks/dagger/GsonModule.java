@@ -18,6 +18,8 @@ public class GsonModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        return Converters.registerDateTime(new GsonBuilder().excludeFieldsWithoutExposeAnnotation()).create();
+        GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                                               .registerTypeAdapter(Converters.DATE_TIME_TYPE, new DateTimeConverter());
+        return builder.create();
     }
 }

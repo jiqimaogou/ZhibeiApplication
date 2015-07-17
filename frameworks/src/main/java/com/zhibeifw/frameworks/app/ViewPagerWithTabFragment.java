@@ -26,10 +26,10 @@ public class ViewPagerWithTabFragment extends ViewPagerFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getmTabLayout().setupWithViewPager(getViewPager());
+        getTabLayout().setupWithViewPager(getViewPager());
     }
 
-    public TabLayout getmTabLayout() {
+    public TabLayout getTabLayout() {
         if (mTabLayout == null) {
             mTabLayout = ButterKnife.findById(getView(), R.id.tabLayout);
         }
