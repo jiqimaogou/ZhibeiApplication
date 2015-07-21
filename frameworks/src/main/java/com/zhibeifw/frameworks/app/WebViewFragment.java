@@ -72,6 +72,11 @@ public class WebViewFragment extends BaseFragment implements OnBackPressedListen
             @Override
             public void onPageFinished(WebView view, String url) {
                 mProgressBar.setVisibility(View.GONE);
+                if (mWebView.canGoBack()) {
+                    getBaseActivity().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getBaseActivity().setDisplayHomeAsUpEnabled(false);
+                }
             }
 
             @Override
@@ -111,6 +116,7 @@ public class WebViewFragment extends BaseFragment implements OnBackPressedListen
     public void onDestroyView() {
         mHandler.removeCallbacks(mRunnable);
         getBaseActivity().removeOnBackPressedListener(this);
+        getBaseActivity().setDisplayHomeAsUpEnabled(false);
         super.onDestroyView();
     }
 }

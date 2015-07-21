@@ -54,4 +54,9 @@ public class AccountAuthenticatorFragment extends LoginFragment {
             // EditText are going to appear with an exclamation mark and an explicative message.
         }
     }
+
+    @Override
+    public void startMainActivity() {
+        getActivity().finish();
+    }
 }

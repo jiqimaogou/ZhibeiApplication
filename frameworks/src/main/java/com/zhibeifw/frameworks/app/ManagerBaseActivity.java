@@ -3,6 +3,8 @@ package com.zhibeifw.frameworks.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.yayandroid.theactivitymanager.TheActivityManager;
+
 public class ManagerBaseActivity extends AppCompatActivity {
 
     public ManagerBaseActivity() {

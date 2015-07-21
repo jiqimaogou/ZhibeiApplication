@@ -5,9 +5,9 @@ import android.accounts.AccountManager;
 import android.accounts.AccountsException;
 import android.app.Application;
 
+import com.yayandroid.theactivitymanager.TheActivityManager;
 import com.zhibeifw.frameworks.accounts.AccountUtils;
 import com.zhibeifw.frameworks.accounts.AppAccount;
-import com.zhibeifw.frameworks.app.TheActivityManager;
 
 import java.io.IOException;
 

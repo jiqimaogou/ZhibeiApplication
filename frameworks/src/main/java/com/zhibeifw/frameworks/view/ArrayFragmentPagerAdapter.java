@@ -30,10 +30,10 @@ public abstract class ArrayFragmentPagerAdapter<T> extends FragmentPagerAdapter 
 
     @Override
     public Fragment getItem(int position) {
-        return getItem(data.get(position));
+        return getItem(position, data.get(position));
     }
 
-    public abstract Fragment getItem(T item);
+    public abstract Fragment getItem(int position, T item);
 
     @Override
     public int getCount() {

@@ -10,9 +10,9 @@ import com.orhanobut.wasp.Wasp;
 import com.orhanobut.wasp.parsers.GsonParser;
 import com.orhanobut.wasp.utils.RequestInterceptor;
 import com.orhanobut.wasp.utils.SimpleInterceptor;
+import com.yayandroid.theactivitymanager.TheActivityManager;
 import com.zhibeifw.frameworks.accounts.AccountUtils;
 import com.zhibeifw.frameworks.accounts.AppAccount;
-import com.zhibeifw.frameworks.app.TheActivityManager;
 
 import java.io.IOException;
 import java.util.Map;

@@ -12,22 +12,22 @@ import java.util.List;
  * Created by Administrator on 2015/6/4 0004.
  */
 
-public class FragmentListPagerAdapter extends FragmentPagerAdapter {
+public class FragmentListPagerAdapter<T extends Fragment> extends FragmentPagerAdapter {
 
-    private final List<Fragment> fragments;
+    private final List<T> fragments;
 
-    public FragmentListPagerAdapter(FragmentManager fm, Fragment... fragments) {
+    public FragmentListPagerAdapter(FragmentManager fm, T... fragments) {
         super(fm);
-        this.fragments = fragments == null ? new ArrayList<Fragment>() : Arrays.asList(fragments);
+        this.fragments = fragments == null ? new ArrayList<T>() : Arrays.asList(fragments);
     }
 
-    public FragmentListPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public FragmentListPagerAdapter(FragmentManager fm, List<T> fragments) {
         super(fm);
-        this.fragments = fragments == null ? new ArrayList<Fragment>() : new ArrayList<Fragment>(fragments);
+        this.fragments = fragments == null ? new ArrayList<T>() : new ArrayList<T>(fragments);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public T getItem(int position) {
         return fragments.get(position);
     }
 

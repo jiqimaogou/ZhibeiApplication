@@ -58,21 +58,21 @@ public class LoginFragment extends Fragment {
     private boolean progressShow;
     private boolean autoLogin = false;
 
-    //    private String currentUsername;
-    //    private String currentPassword;
+    // private String currentUsername;
+    // private String currentPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 如果用户名密码都有，直接进入主页面
+        /* // 如果用户名密码都有，直接进入主页面
         if (HXSDKHelper.getInstance().isLogined()) {
             autoLogin = true;
             startMainActivity();
 
             return;
         }
-        //        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login); */
     }
 
     @Override

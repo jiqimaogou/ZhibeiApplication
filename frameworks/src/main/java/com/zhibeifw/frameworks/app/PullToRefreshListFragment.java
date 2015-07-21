@@ -17,6 +17,11 @@ public class PullToRefreshListFragment extends ListFragment implements PullToRef
     private PullToRefreshBase<AbsListView> mPullToRefreshListView;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateListView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mPullToRefreshListView = (PullToRefreshBase) inflater.inflate(R.layout.ptr_list, container, false);
 

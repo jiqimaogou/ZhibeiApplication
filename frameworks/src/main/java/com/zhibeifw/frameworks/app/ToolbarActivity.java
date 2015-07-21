@@ -1,7 +1,6 @@
 package com.zhibeifw.frameworks.app;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
@@ -9,7 +8,7 @@ import com.zhibeifw.frameworks.R;
 
 import butterknife.ButterKnife;
 
-public class ToolbarActivity extends ActionBarActivity {
+public class ToolbarActivity extends BaseActivity {
 
     private Toolbar mToolbar;
 
@@ -45,5 +44,4 @@ public class ToolbarActivity extends ActionBarActivity {
     public int getContentId() {
         return R.id.toolbarContent;
     }
-
 }

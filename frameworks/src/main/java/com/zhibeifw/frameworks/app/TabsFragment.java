@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/6/18 0018.
  */
-public abstract class TabsFragment extends BaseFragment {
+public abstract class TabsFragment extends BaseFragment implements TabHost.OnTabChangeListener {
 
     private FragmentTabHost mTabHost;
 
@@ -32,7 +32,13 @@ public abstract class TabsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         getTabHost().setup(getActivity(), getChildFragmentManager(), getContainerId());
         setCustomTabLayoutIfNecessary();
+        getTabHost().setOnTabChangedListener(this);
         addTab(getTabHost());
+    }
+
+    @Override
+    public void onTabChanged(String tabId) {
+        getActivity().setTitle(tabId);
     }
 
     private void setCustomTabLayoutIfNecessary() {

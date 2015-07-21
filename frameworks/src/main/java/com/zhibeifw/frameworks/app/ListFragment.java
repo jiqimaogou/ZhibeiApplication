@@ -226,9 +226,33 @@ public class ListFragment extends BaseFragment {
         return mList.getSelectedItemPosition();
     }
 
+    public Object getSelectedItem() {
+        int selectedItemPosition = getSelectedItemPosition();
+        if (selectedItemPosition > -1) {
+            return mList.getAdapter().getItem(selectedItemPosition);
+        }
+
+        return null;
+    }
+
+    public int getCheckedItemPosition() {
+        ensureList();
+        return mList.getCheckedItemPosition();
+    }
+
+    public Object getCheckedItem() {
+        int checkedItemPosition = getCheckedItemPosition();
+        if (checkedItemPosition > -1) {
+            return mList.getAdapter().getItem(checkedItemPosition);
+        }
+
+        return null;
+    }
+
     /**
      * Get the cursor row ID of the currently selected list item.
      */
+
     public long getSelectedItemId() {
         ensureList();
         return mList.getSelectedItemId();
