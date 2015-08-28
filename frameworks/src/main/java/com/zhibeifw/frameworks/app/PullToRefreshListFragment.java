@@ -1,6 +1,7 @@
 package com.zhibeifw.frameworks.app;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,20 @@ public class PullToRefreshListFragment extends ListFragment implements PullToRef
 
     private PullToRefreshBase<AbsListView> mPullToRefreshListView;
 
+    final private Handler mHandler = new Handler();
+
+    final private Runnable mRequestRefresh = new Runnable() {
+        public void run() {
+            if (mPullToRefreshListView != null) {
+                mPullToRefreshListView.setRefreshing();
+            }
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler.postDelayed(mRequestRefresh, 500);
     }
 
     @Override
@@ -44,5 +56,29 @@ public class PullToRefreshListFragment extends ListFragment implements PullToRef
      */
     public final PullToRefreshBase<AbsListView> getPullToRefreshListView() {
         return mPullToRefreshListView;
+    }
+
+    public void setRefreshing() {
+        getPullToRefreshListView().setRefreshing();
+    }
+
+    public void setRefreshing(boolean doScroll) {
+        getPullToRefreshListView().setRefreshing(doScroll);
+    }
+
+    public boolean isRefreshing() {
+        return getPullToRefreshListView().isRefreshing();
+    }
+
+    public void onRefreshComplete() {
+        getPullToRefreshListView().onRefreshComplete();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mHandler.removeCallbacks(mRequestRefresh);
+        mList = null;
+
+        super.onDestroyView();
     }
 }

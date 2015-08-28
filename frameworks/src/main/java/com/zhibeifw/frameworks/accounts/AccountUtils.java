@@ -55,8 +55,8 @@ public class AccountUtils {
                 for (AuthenticatorDescription descriptor : types)
                     if (descriptor != null && ACCOUNT_TYPE.equals(descriptor.type)) {
                         HAS_AUTHENTICATOR = BaseApplication.getInstance()
-                                                           .getPackageName()
-                                                           .equals(descriptor.packageName);
+                                .getPackageName()
+                                .equals(descriptor.packageName);
                         break;
                     }
             AUTHENTICATOR_CHECKED = true;
@@ -240,8 +240,18 @@ public class AccountUtils {
         return false;
     }
 
-    public static void removeAccount(Context context, Account account) {
+    public static Boolean removeAccount(Context context, Account account) {
         final AccountManager accountManager = AccountManager.get(context);
-        accountManager.removeAccount(account, null, null);
+        AccountManagerFuture<Boolean> future = accountManager.removeAccount(account, null, null);
+        try {
+            return future.getResult();
+        } catch (OperationCanceledException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AuthenticatorException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

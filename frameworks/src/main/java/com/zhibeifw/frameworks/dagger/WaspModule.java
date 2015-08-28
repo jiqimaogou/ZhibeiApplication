@@ -3,6 +3,7 @@ package com.zhibeifw.frameworks.dagger;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountsException;
+import android.app.Activity;
 import android.app.Application;
 
 import com.google.gson.Gson;
@@ -38,8 +39,8 @@ public class WaspModule {
                 headers.put("Accept", "application/json");
                 try {
                     AccountManager accountManager = AccountManager.get(application);
-                    Account account = AccountUtils.getAccount(accountManager,
-                                                              TheActivityManager.getInstance().getCurrentActivity());
+                    Activity currentActivity = TheActivityManager.getInstance().getCurrentActivity();
+                    Account account = AccountUtils.getAccount(accountManager, currentActivity);
                     AppAccount appAccount = new AppAccount(account, accountManager);
                     String password = appAccount.getPassword();
                     headers.put("TOKEN", password);
@@ -51,16 +52,16 @@ public class WaspModule {
             }
         };
         return new Wasp.Builder(application).setEndpoint("http://app.shengwu315.com")
-                                            .setParser(new GsonParser(gson))
-                                            .setRequestInterceptor(interceptor)
-                                            .build();
+                .setParser(new GsonParser(gson))
+                .setRequestInterceptor(interceptor)
+                .build();
     }
 
     @Provides
     @Singleton
     Wasp provideWasp(Application application, Gson gson) {
         return new Wasp.Builder(application).setEndpoint("http://app.shengwu315.com")
-                                            .setParser(new GsonParser(gson))
-                                            .build();
+                .setParser(new GsonParser(gson))
+                .build();
     }
 }

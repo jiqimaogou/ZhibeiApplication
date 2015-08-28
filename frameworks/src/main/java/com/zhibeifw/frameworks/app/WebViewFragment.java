@@ -72,10 +72,12 @@ public class WebViewFragment extends BaseFragment implements OnBackPressedListen
             @Override
             public void onPageFinished(WebView view, String url) {
                 mProgressBar.setVisibility(View.GONE);
-                if (mWebView.canGoBack()) {
-                    getBaseActivity().setDisplayHomeAsUpEnabled(true);
-                } else {
-                    getBaseActivity().setDisplayHomeAsUpEnabled(false);
+                if (getParentFragment() != null) {
+                    if (mWebView.canGoBack()) {
+                        getBaseActivity().setDisplayHomeAsUpEnabled(true);
+                    } else {
+                        getBaseActivity().setDisplayHomeAsUpEnabled(false);
+                    }
                 }
             }
 
@@ -92,6 +94,7 @@ public class WebViewFragment extends BaseFragment implements OnBackPressedListen
         mWebView.getSettings().setAppCacheEnabled(true);
         // to enable pinch to zoom, use this line of code:
         mWebView.getSettings().setBuiltInZoomControls(true);
+        //        mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         return root;
     }

@@ -34,7 +34,6 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chatuidemo.Constant;
 import com.easemob.chatuidemo.HXApplication;
-import com.easemob.chatuidemo.HXSDKHelper;
 import com.easemob.chatuidemo.R;
 import com.easemob.chatuidemo.db.UserDao;
 import com.easemob.chatuidemo.domain.User;
@@ -175,14 +174,14 @@ public class LoginFragment extends Fragment {
                             pd.dismiss();
                             HXApplication.getInstance().logout(null);
                             Toast.makeText(getActivity().getApplicationContext(), R.string.login_failure_failed, 1)
-                                 .show();
+                                    .show();
                         }
                     });
                     return;
                 }
                 // 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
                 boolean updatenick = EMChatManager.getInstance()
-                                                  .updateCurrentUserNick(HXApplication.currentUserNick.trim());
+                        .updateCurrentUserNick(HXApplication.currentUserNick.trim());
                 if (!updatenick) {
                     Log.e("LoginActivity", "update current user nick fail");
                 }

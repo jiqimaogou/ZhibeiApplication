@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="easemob_appkey">easemob-demo#chatdemoui</string>
+    <string name="umeng_appkey">53912a3156240b01a7075ed1</string>
 </resources>

@@ -63,6 +63,10 @@ public class SingleFragmentActivity extends BaseActivity implements FragmentStac
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         Fragment fragment = mStack.peek();
-        fragment.startActivityForResult(intent, requestCode);
+        if (fragment.getActivity() != null) {
+            fragment.startActivityForResult(intent, requestCode);
+        } else {
+            super.startActivityForResult(intent, requestCode);
+        }
     }
 }

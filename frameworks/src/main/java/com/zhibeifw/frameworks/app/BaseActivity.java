@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.umeng.message.PushAgent;
 import com.zhibeifw.frameworks.R;
 
 import java.lang.reflect.Field;
@@ -72,8 +73,9 @@ public class BaseActivity extends ManagerBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(this).onAppStart();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setDisplayHomeAsUpEnabled(false);
+        setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
